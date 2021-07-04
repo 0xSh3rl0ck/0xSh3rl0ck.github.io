@@ -1,0 +1,15 @@
+# main links
+main:
+  - title: "CTF-WriteUp"
+    url: /categories/#ctf-writeup
+  - title: "All Categories"
+    url: /categories
+
+  # - title: "Sample Posts"
+  #   url: /year-archive/
+  # - title: "Sample Collections"
+  #   url: /collection-archive/
+  # - title: "Sitemap"
+  #   url: /sitemap/
+  # - title: "Quick-Start Guide"
+  # url: https://google.com
