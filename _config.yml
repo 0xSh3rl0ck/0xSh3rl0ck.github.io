@@ -110,7 +110,7 @@ author:
       url: "https://twitter.com/0xSh3rl0ck"
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
-       url: "https://www.facebook.com/0xSh3rl0ck/"
+      # url: "https://www.facebook.com/0xSh3rl0ck/"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/0xsh3rl0ck/"
