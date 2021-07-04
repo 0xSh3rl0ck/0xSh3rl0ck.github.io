@@ -1,4 +1,14 @@
-# Solution
+---
+title: "CyberTalents - Monaliza"
+classes: wide
+header:
+  teaser: /assets/images/CTF-WriteUp/Monaliza/mona-lisa-c-1503-1519.jpg
+ribbon: MidnightBlue
+description: "Monaliza is a Digital Forensics Medium challenge. From the Cyber ​​Talent platform."
+categories:
+  - CTF-WriteUp
+toc: true
+---
 
 1- we will unzip the folder
 we will notice that the extension of the extracted file is **monaliza.mem**
