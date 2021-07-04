@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-02-02T12:33:28+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">ezi0x00</title><subtitle>Reverse Engineering - Malware Analysis - Digital Forensics - Exploit Development</subtitle><author><name>Omar Mohamed</name></author><entry><title type="html">Deep Analysis of Emotet Banking Trojan (TA542 APT)</title><link href="http://localhost:4000/malware%20analysis/emotet/" rel="alternate" type="text/html" title="Deep Analysis of Emotet Banking Trojan (TA542 APT)" /><published>2021-01-30T00:00:00+02:00</published><updated>2021-01-30T00:00:00+02:00</updated><id>http://localhost:4000/malware%20analysis/emotet</id><content type="html" xml:base="http://localhost:4000/malware%20analysis/emotet/">&lt;h1 id=&quot;-emotet-live-cycle-&quot;&gt;&lt;u&gt; Emotet Live Cycle &lt;/u&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/0.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/0.png&quot; alt=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;first-stage-microsoft-word-document-downloader&quot;&gt;&lt;u&gt;First Stage: Microsoft Word Document [Downloader]&lt;/u&gt;&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Fingerprint&lt;/th&gt;
+      &lt;th&gt;Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MD5:&lt;/td&gt;
+      &lt;td&gt;57be28414e61ff58a6b52fc3c1b70b7f&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SHA-1:&lt;/td&gt;
+      &lt;td&gt;c4fbb54b194c1303897ac869811a274303d27f38&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SHA-256:&lt;/td&gt;
+      &lt;td&gt;01b1232dee4ac560ba34061aa65f5de79c7182de3b6f313ad1a83c39ce61550c&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;File Type:&lt;/td&gt;
+      &lt;td&gt;Composite Document File V2 Document&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Create Time/Date:&lt;/td&gt;
+      &lt;td&gt;Fri Mar 15 16:04:00 2019&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The first stage of this malware is an microsoft Word formats (.doc) use VBA (Visual Basic for Applications) AutoOpen macros to execute code that downloads the Emotet loader. Emotet Word documents contain embedded images that request the user to click the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enable Editing&lt;/code&gt; button to disable Microsoft Word’s read-only mode (Protected View) and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enable Content&lt;/code&gt; to cause the macro to run.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/1.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/1.png&quot; alt=&quot;1&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;To view the macro click on Developer tab, click Visual Basic and you can see the macro.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/2.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/2.png&quot; alt=&quot;2&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/3.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/3.png&quot; alt=&quot;3&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;vba-analysis&quot;&gt;VBA Analysis&lt;/h2&gt;
+
+&lt;p&gt;The documents contain obfuscated VBA code let’s analysis the most important parts in it&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/4.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/4.png&quot; alt=&quot;4&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autoopen()&lt;/code&gt; function which gets executed when the document is opened&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/5.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/5.png&quot; alt=&quot;5&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;powershell -e&lt;/code&gt;
+ first thing after execution the code creation of string by “powershell -e”.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/6.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/6.png&quot; alt=&quot;6&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dBCWQQZ = winmgmts:Win32_Process&lt;/code&gt;
+ then variable dBCwQQZ is defined with the string “winmgmts:Win32_Process”.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/7.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/7.png&quot; alt=&quot;7&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TCXD_U =GetObject(winmgmts:Win32_ProcessStartup)&lt;/code&gt;
+ then variable TCXD_U is defined with the string “GetObject(winmgmts:Win32_ProcessStartup)”.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/8.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/8.png&quot; alt=&quot;8&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetObject(winmgmts:Win32_ProcessStartup).ShowWindow = 0&lt;/code&gt;
+ then sets the parameter of “GetObject(winmgmts:Win32_ProcessStartup).ShowWindow” to a value of 0.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/9.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/9.png&quot; alt=&quot;9&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jDD_UwDB = GetObject(winmgmts:Win32_Process).Create&lt;/code&gt;
+ Variable jDD_UwDB is defined with the string “GetObject(winmgmts:Win32_Process).Create”.&lt;/p&gt;
+
+&lt;p&gt;We can conclude from those parts the VBA code references Windows Management Instrumentation (WMI) classes winmgmts:Win32_ProcessStartup and winmgmts:Win32_Process. The macro uses WMI (Windows Management Instrumentation) to indirectly run PowerShell. The process is launched as a child process of WmiPrvSe.exe (WMI Provider Host).&lt;/p&gt;
+
+&lt;h2 id=&quot;powershell-analysis&quot;&gt;PowerShell Analysis&lt;/h2&gt;
+
+&lt;p&gt;extract powershell string:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/10.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/10.png&quot; alt=&quot;10&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Base64 encoded, after decoded:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/11.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/11.png&quot; alt=&quot;11&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After decoding the Base64 encoded string, the output illustrated in Figure is produced. The command is obfuscated using the same string joining and case mismatch techniques to evade detection. The decoded string contains many &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;+&lt;/code&gt; characters that are used to concatenate strings, and a mixture of uppercase and lowercase characters. By removing all the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;+&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;''&lt;/code&gt; characters the deobfuscated command is revealed:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/12.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/12.png&quot; alt=&quot;12&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/13.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/12.png&quot; alt=&quot;13&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The PowerShell command above compress and decodes another Base64 encoded string and reads it as a flow until it reaches the end of the chain. Then it runs the resulting output in memory using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iex&lt;/code&gt; alias of the Invoke-Expression cmdlet. This is a technique for executing commands in memory without saving files to disk. The command uses the variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$Verbosepreference&lt;/code&gt; which contains the string &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SilentlyContinue&lt;/code&gt;. The first and third characters (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;i&lt;/code&gt; and&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt; e&lt;/code&gt;) are identified from the string, which are then joined by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X&lt;/code&gt;, to form the text string&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt; ieX&lt;/code&gt;.
+The de obfuscated PowerShell script first splits the string assigned to the variable $XXQCZAxA using the “@” character as a delimiter and then enters a ForEach loop, which iterates the resulting array of URLs(hxxp://dautudatnenhoalac[.]com/wp-admin/DYAsI/)(hxxp://www.bewebpreneur[].]com/wp-admin/daHN/) to download the Emotet loader to the victim’s filesystem using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Net.WebClient&lt;/code&gt; class. The script uses the environment variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$env:userProfile&lt;/code&gt; to fetch the user profile directory of the currently logged-in user. The downloaded file is saved to the victim’s user profile directory &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(typically C:\Users\[Username])&lt;/code&gt; and set the file name with variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TQQZoAGU&lt;/code&gt; and this variable it equal 15 so the file will drop it called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;15.exe&lt;/code&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/14.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/14.png&quot; alt=&quot;14&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/15.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/15.png&quot; alt=&quot;15&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/16.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/16.png&quot; alt=&quot;16&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;As we can see when we run the command, it sends a HTTP GET request to retrieve the second-stage Emotet executable from (hxxp://dautudatnenhoalac[.]com/wp-admin/DYAsI). The response from the web server indicates that the file served is called s17zjCTuWfNF.exe and that the payload is a PE format file as indicated by the ASCII representation of the magic bytes 0x4D5A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MZ&lt;/code&gt; at the start of the file.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Notice: The ForEach loop exits when check the file is large than 40 KB but when used fake net you will see the file is 2kb cause it's fake simulation. run the file to see real executable file&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/17.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/17.png&quot; alt=&quot;17&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;And here it is, as we mentioned before the macro uses WMI (Windows Management Instrumentation) to indirectly run PowerShell. The process is launched as a child process of WmiPrvSe.exe (WMI Provider Host).&lt;/p&gt;
+
+&lt;h1 id=&quot;-second-stage-executable-file-&quot;&gt;&lt;u&gt; Second Stage: Executable File &lt;/u&gt;&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Fingerprint&lt;/th&gt;
+      &lt;th&gt;Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MD5:&lt;/td&gt;
+      &lt;td&gt;322f9ca84dfa866cb719b7aecc249905&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SHA-1:&lt;/td&gt;
+      &lt;td&gt;147ddeb14bfcc1ff2ee7ef6470ca9a720e61aeaa&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SHA-256:&lt;/td&gt;
+      &lt;td&gt;af2f82adf716209cd5ba1c98d0dcd2d9a171bb0963648bd8bd962edb52761241&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;File Type:&lt;/td&gt;
+      &lt;td&gt;PE32 executable (GUI) Intel 80386, for MS Windows&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;File Size:&lt;/td&gt;
+      &lt;td&gt;428808 bytes&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Compiled:&lt;/td&gt;
+      &lt;td&gt;Fri Mar 15 19:49:00 2019&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;static-analysis&quot;&gt;Static Analysis&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/18.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/18.png&quot; alt=&quot;18&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;in sections, notice in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.rsrc&lt;/code&gt; (resource) the file in front of us occupies only 51% of the real file space, which means that the program is packed.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/19.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/19.png&quot; alt=&quot;19&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/20.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/20.png&quot; alt=&quot;20&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We notice in the resource label, there are two unfamiliar resources called EXCEPT and CALIBRATE, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXCEPT&lt;/code&gt; have high entropy and large size This makes you think that it is encrypted payload. After dumbed the resource we notice there are encrypted data.&lt;/p&gt;
+
+&lt;h2 id=&quot;behavioral-analysis&quot;&gt;Behavioral Analysis&lt;/h2&gt;
+
+&lt;p&gt;First: After, downloading the emotet it lunches itself and first launcher lunches another instance from the same location(C:\Users[username]) as a child process and copied itself to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Windows\SysWOW6&lt;/code&gt; with different name, in my stat the name is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;devneutral.exe&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/21.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/21.png&quot; alt=&quot;21&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The process creates a service to indirectly launch the loader. In the call to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CreateService&lt;/code&gt;, the BinaryPath points to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Windows\SysWOW64\devneutral.exe&lt;/code&gt; and the DesiredAccess is 18. This value grants &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SERVICE_CHANGE_CONFIG&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SERVICE_START&lt;/code&gt; access permissions to the service.
+And, create some libraries, read them as we can see:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/22.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/22.png&quot; alt=&quot;22&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After, read the created libraries, we notice in threads and process activity it loaded it and their some interesting libraries like: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kernall32.dll - crypt32.dll - mswsock.dll - urlmon.dll&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/23.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/23.png&quot; alt=&quot;23&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;And, here all registries it implementation with emotet and interesting one is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{aa5b6a80-b834-11d0-932f-00a0c90dcaa9}&lt;/code&gt; which is passed as a parameter to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RegOpenKeyA&lt;/code&gt;. This registry key is required for the Windows scripting engine interface&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/24.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/24.png&quot; alt=&quot;24&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After registering itself as service, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;devneutral.exe&lt;/code&gt; is launched by services.exe. and downloads the next stage payload from a remote server.
+Then collects system information and sends it through an encrypted channel to its command and control (C2) servers in the data section of HTTP POST requests and receives further commands and payloads from the servers as a response. The loader also downloads modules to extend the functionality of the loader as well as other malware families.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/25.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/25.png&quot; alt=&quot;25&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/26.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/26.png&quot; alt=&quot;26&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Notice: Emotet sent encrypted C2 data as cookie values in the headers of HTTP GET requests.&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;binary-analysis&quot;&gt;Binary Analysis&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;start&lt;/code&gt; function that generates an array of characters and has a conditional while (true) infinite loop. The function works by reading a Windows Registry key through a call to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RegOpenKeyA&lt;/code&gt;. If the key is not found, the malware enters an infinite loop&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/27.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/27.png&quot; alt=&quot;27&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/28.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/28.png&quot; alt=&quot;28&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sub_401A90&lt;/code&gt; function  decodes a string with the value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interface\{aa5b6a80-b834-11d0-932f-00a0c90dcaa9}&lt;/code&gt;(mentioned it before) which is passed as a parameter to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RegOpenKeyA&lt;/code&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/29.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/29.png&quot; alt=&quot;29&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/30.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/30.png&quot; alt=&quot;30&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The important function, It sparked my attention is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualAllocEx&lt;/code&gt;. This function is used to allocate memory in a remote process and is often used by emotet for process injection. We will start by putting a breakpoint on the return address for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualAllocEx&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;First: After, open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;15.exe&lt;/code&gt; in x32dbg go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;symbols&lt;/code&gt;, search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualAlloc&lt;/code&gt;, but breakpoint on the address of function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualAllocEx&lt;/code&gt; and run.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/32.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/32.png&quot; alt=&quot;32&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Then: but breakpoint on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ret&lt;/code&gt; (return of function) and run.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/33.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/33.png&quot; alt=&quot;33&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If we run until the breakpoint, we see that emotet creates an allocation of memory at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0x00011200&lt;/code&gt;. It then copies a code stub from the .data section of the mapped image at 0x00470000 to the newly allocated memory space and gives control to it.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/34.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/34.png&quot; alt=&quot;34&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/35.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/35.png&quot; alt=&quot;35&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Before breakpoint:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/36.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/36.png&quot; alt=&quot;36&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Emotet then deobfuscates API and DLL names from the code copied to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0x00011200&lt;/code&gt;, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LoadLibraryExA&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kernel32.dll&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualAlloc&lt;/code&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/37.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/37.png&quot; alt=&quot;37&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/38.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/38.png&quot; alt=&quot;38&quot; /&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;It then calls &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetProcAddress&lt;/code&gt; from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kernel32.dll&lt;/code&gt; to get the addresses of the decoded API names.&lt;/p&gt;
+
+&lt;p&gt;The functions decoded:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LoadLibraryExA   
+GetProcAddress
+VirtualAlloc   
+GetModuleHandleA
+UnmapViewOfFile
+WriteFile
+SetFilePointer  
+Sleep
+LstrlenA   
+LstrcatA   
+VirtualProtect
+CloseHandle   
+VirtualFree   
+GetTempPathA
+CreateFileA
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The emotet loader calls &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetProcAddress&lt;/code&gt; for an invalid function name called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mknjht34tfserdgfwGetProcAddress&lt;/code&gt;. Since this is invalid, the function returns a null value with an error code of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0000007F (ERROR_PROC_NOT_FOUND)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/41.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/41.png&quot; alt=&quot;41&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Once the code stub has retrieved the function addresses, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualAlloc&lt;/code&gt; is called to allocate another memory region where it writes the decrypted PE file from the .data section of 15.exe, rather than from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.rsrc&lt;/code&gt; section.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/42.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/42.png&quot; alt=&quot;42&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;-third-stage-unpacked-executable-file-&quot;&gt;&lt;u&gt; Third Stage: Unpacked Executable File &lt;/u&gt;&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Fingerprint&lt;/th&gt;
+      &lt;th&gt;Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MD5:&lt;/td&gt;
+      &lt;td&gt;D623BD93618B6BCA25AB259DE21E8E12&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SHA-1:&lt;/td&gt;
+      &lt;td&gt;BBE1BFC57E8279ADDF2183F8E29B90CFA6DD88B4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SHA-256:&lt;/td&gt;
+      &lt;td&gt;01F86613FD39E5A3EDCF49B101154020A7A3382758F36D875B12A94294FBF0EA&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Dumping the executable and examining it reveals that it is another packed Emotet binary that contains the main loader.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/images/Malware-Analysis/Emotet/43.png&quot;&gt;&lt;img src=&quot;/assets/images/Malware-Analysis/Emotet/43.png&quot; alt=&quot;43&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;After API name resolution, GetCurrentProcessId is called to get the process ID (PID) of Emotet‘s running process. Afterwards, Emotet iterates through all running processes to find its module name and parent PID. Once it finds its parent PID, it creates two mutexes with the format PEM%X. One of the mutexes is created using the parent process ID (PEM[PPID]) and the other uses its own PID (PEM[PID]).&lt;/p&gt;
+
+&lt;p&gt;After creating these mutexes, it calls CreateEventW to create an event using the format PEE%X, where %X is its parent PID. If both mutexes are successfully created, it launches 15.exe again from the same path. After launching the child process, it calls WaitForSingleObject on the PEE%X event.&lt;/p&gt;
+
+&lt;p&gt;We have seen in some of the Emotet samples that it launches child process with a command line switch. This command line switches are an indication that an Emotet process has been launched as a child process and has to perform a designated task.&lt;/p&gt;
+
+&lt;p&gt;The launched child process does everything same until it evaluates whether to create the two mutexes described above. This time the call to CreateMutex for mutex PEM[PPID] fails with the error “ERROR_ALREADY_EXISTS”. After the mutex creation fails in the child process, it signals the event PEE[PPID] to the parent process 15.exe. The parent process exits from a waiting state and then terminates itself.&lt;/p&gt;
+
+&lt;h1 id=&quot;-iocs-&quot;&gt;&lt;u&gt; IOCs &lt;/u&gt;&lt;/h1&gt;
+
+&lt;h2 id=&quot;-hashes-md5-&quot;&gt;&lt;u&gt; Hashes (MD5): &lt;/u&gt;&lt;/h2&gt;
+
+&lt;p&gt;First Stage: 57be28414e61ff58a6b52fc3c1b70b7f
+Second Stage: 322f9ca84dfa866cb719b7aecc249905
+Third Stage: D623BD93618B6BCA25AB259DE21E8E12&lt;/p&gt;
+
+&lt;h2 id=&quot;-domains-requests-&quot;&gt;&lt;u&gt; Domains Requests: &lt;/u&gt;&lt;/h2&gt;
+
+&lt;p&gt;hxxp://dautudatnenhoalac[.]com/wp-admin/DYAsI/
+hxxp://www.bewebpreneur[.]com/wp-admin/daHN/
+hxxp://82.78.228[.]57:443/free/tlb/&lt;/p&gt;
+
+&lt;h2 id=&quot;-ips&quot;&gt;&lt;u&gt; IPs&lt;/u&gt;&lt;/h2&gt;
+
+&lt;p&gt;103.237.145.132
+192.241.233.63
+82.78.228.57&lt;/p&gt;
+
+&lt;h1 id=&quot;-references-&quot;&gt;&lt;u&gt; References &lt;/u&gt;&lt;/h1&gt;
+
+&lt;p&gt;https://app.any.run/tasks/1879ad1f-ac52-4fba-9230-9cffee29e6cc
+https://medium.com/swlh/static-analysis-of-the-emotet-malware-f94b16aa8f70
+https://www.malwarebytes.com/emotet/
+https://www.fortinet.com/blog/threat-research/deep-dive-into-emotet-malware
+https://threatresearch.ext.hp.com/emotet-analysis-part-3/ and Part [1,2]&lt;/p&gt;</content><author><name>Omar Mohamed</name></author><summary type="html">Emotet Live Cycle</summary></entry></feed>
