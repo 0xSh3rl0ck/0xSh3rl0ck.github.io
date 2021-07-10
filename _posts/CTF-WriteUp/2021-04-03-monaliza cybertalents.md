@@ -4,7 +4,7 @@ classes: wide
 header:
   teaser: /assets/images/CTF-WriteUp/Monaliza/mona-lisa-c-1503-1519.jpg
 ribbon: MidnightBlue
-description: "Monaliza is a Digital Forensics Medium challenge. From the Cyber ​​Talent platform."
+description: "Monaliza is a Digital Forensics Medium challenge. From the CyberTalent platform."
 categories:
   - CTF-WriteUp
 toc: true
