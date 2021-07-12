@@ -151,6 +151,9 @@ then we will crack the hash i used the same [online tool](https://www.onlinehash
 
 [![32](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture32.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture32.PNG)
 
+useful resource : 
+[windows-forensic-analysis](https://www.sans.org/blog/new-windows-forensics-evidence-of-poster-released/)
+
 i hope you enjoy this :) , if you have any question contact me.
 
 
