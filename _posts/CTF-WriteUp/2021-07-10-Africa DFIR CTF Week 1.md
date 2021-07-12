@@ -25,11 +25,11 @@ As we see from the name of the challenge "Deleted". so what we will search for w
 
 [![3](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture3.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture3.PNG)
 
-here we talk about IPv4 of FTP server so first let's see what app the user use.so let's go to installed Programs in autopsy.  
+here we talk about IPv4 of FTP server so first let's see what app the user use. so let's go to installed Programs in autopsy.   
 
 [![4](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture4.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture4.PNG)
 
-as we see here he used FileZilla Client 3.53.1 v.3.53.1. In the case of FileZilla our source of evidence is the xml configuration files that FileZilla leaves behind in the %user%\appdata\roaming\filezilla directory(FileZilla Artifacts).as we see here : 
+as we see here he used FileZilla Client 3.53.1 v.3.53.1. In the case of FileZilla our source of evidence is the XML configuration files that FileZilla leaves behind in the %user%\appdata\roaming\filezilla directory(FileZilla Artifacts).as we see here : 
 
 [![5](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture5.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture5.PNG)
 
@@ -57,7 +57,7 @@ then we will go to web history and we will find the flag :
 
 [![12](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture12.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture12.PNG)
 
-here we can use two ways one to go to exif metadata to find the photo or to use keyword search :
+here we can use two ways one to go to exif metadata (Autopsy Ingest Module) to find the photo or to use keyword search :
 
 [![11](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture11.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture11.PNG)
 
@@ -103,53 +103,53 @@ like we guessed that the user installed and used nmap to make port scan.so to ge
 
 # Copy Location:
 
-[![22](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture22.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture22.png)
+[![22](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture22.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture22.PNG)
 
 first i made a keyword search to find the photo.
 
-[![23](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture23.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture23.png)
+[![23](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture23.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture23.PNG)
 
 then we will use any online tool to extract metadata or we can use exiftool.
 
-[![24](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture24.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture24.png)
+[![24](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture24.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture24.PNG)
 
 After we see LG Electronics so what come to my mind are `ShellBags` are a popular artifact in Windows forensics often used to identify the existence of directories on local, network, and removable storage devices. ShellBags are stored as a highly nested and hierarchal set of subkeys in the UsrClass.They are are a set of subkeys in the UsrClass.dat registry hive of Windows 10 systems. The shell bags are stored in both NTUSER.DAT and USRCLASS.DAT: 
   NTUSER.DAT: HKCU\Software\Microsoft\Windows\Shell
   USRCLASS.DAT: HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell
 in Autopsy we can go to shellbags and get the flag `DCIM` : 
 
-[![25](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture25.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture25.png)
+[![25](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture25.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture25.PNG)
 
 # Hash Cracker:
 
-[![26](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture26.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture26.png)
+[![26](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture26.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture26.PNG)
 
 by using google we can identify the hash type which is `NTLM` Hash you can read about it [Here](https://aio-forensics.com/recover-windows-passwords-Forensics).
 
 we can use two ways to bruteforce the first one with hashcat , the second one with any online tool the easy way ^^.
 
-[![28](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture28.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture28.png)
+[![28](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture28.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture28.PNG)
 
 # User Password:
 
-[![27](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture27.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture27.png)
+[![27](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture27.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture27.PNG)
 
 what come to my mind when i saw `Windows login password` ?
 that we need to go to Registry artifacts in a Windows system because it functions as a database that stores various system configurations every second `HKEY_CURRENT_CONFIG: Stores information from the hardware profile that is being used on the current system`.
 
-[![29](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture29.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture29.png)
+[![29](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture29.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture29.PNG)
 
  what we need to extract is `HKEY_LOCAL_MACHINE \ SAM` and `HKEY_LOCAL_MACHINE \ System ` .After Extract them i will use [mimikatz](https://github.com/gentilkiwi/mimikatz/wiki) to get the user hash from extracted Registry Hives.
 
- the command i used : [![30](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture30.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture30.png)
+ the command i used : [![30](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture30.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture30.PNG)
 
  the user NTLM hash : 
 
-[![31](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture31.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture31.png)
+[![31](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture31.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture31.PNG)
 
 then we will crack the hash i used the same [online tool](https://www.onlinehashcrack.com/) to crack it we can also use hashcat or john the ripper.then we will get the flag :).
 
-[![32](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture32.png)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture32.png)
+[![32](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture32.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture32.PNG)
 
 i hope you enjoy this :) , if you have any question contact me.
 
