@@ -1,3 +1,4 @@
+---
 title: "Africa DFIR CTF Week 2"
 classes: wide
 header:
