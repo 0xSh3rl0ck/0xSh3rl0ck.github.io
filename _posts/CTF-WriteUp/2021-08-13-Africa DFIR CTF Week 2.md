@@ -19,3 +19,11 @@ we will use of course [volatility3](https://github.com/volatilityfoundation/vola
 # Be Brave:
 
 [![1](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture1.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture1.PNG)
+
+here in the description he talk about process ID for application brave. In computing, the process identifier (a.k.a. process ID or PID) is a number used by most operating system kernels—such as those of Unix, macOS and Windows—to uniquely identify an active process. This number may be used as a parameter in various function calls, allowing processes to be manipulated, such as adjusting the process's priority or killing it altogether.
+
+in volatility there is a plugin called windows.pslist.PsList which list all the process with the PID which we need for the flag.
+
+[![1](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture2.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture2.PNG)
+
+Flag : <span style="color: #909090">4856</span>
