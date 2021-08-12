@@ -4,7 +4,7 @@ classes: wide
 header:
   teaser: /assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture.PNG
 ribbon: Black
-description: "This is Week 1 from Africa DFIR CTF, which talks about Forensic Disk Image."
+description: "This is Week 1 from Africa DFIR CTF, which talks about Disk Image Forensics."
 categories:
   - CTF-WriteUp
 toc: true
