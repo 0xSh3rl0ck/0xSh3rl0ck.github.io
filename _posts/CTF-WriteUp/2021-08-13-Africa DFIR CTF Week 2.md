@@ -151,11 +151,11 @@ Flag : <span style="color: #909090">4:01:54</span>
 
 here I don't know where to search or where could be the location of what I search about.  I tried keyword search with autopsy but no luck with that until the hint we got that it's inside a pdf first come to my mind that we can search in metadata as if there is a location in pdf autopsy will detect that. bingo! there is a pdf called `almanac-start-a-garden.pdf`. when I searched in it I found this.  
 
-[![23](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture21.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture21.PNG)
+[![23](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture23.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture23.PNG)
 
 if we take this coordinate to any online website to get location we will find the flag. 
 
-[![24](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture21.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture24.PNG)
+[![24](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture24.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture24.PNG)
 
 Flag : <span style="color: #909090">Victoria Falls</span>
 
