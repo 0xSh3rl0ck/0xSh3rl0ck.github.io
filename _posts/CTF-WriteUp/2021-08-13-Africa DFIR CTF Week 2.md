@@ -147,7 +147,7 @@ in this challenge, we talk about a time that the suspect used the Brave browser.
 Flag : <span style="color: #909090">4:01:54</span>
 # Meetings:
 
-[![21](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture21.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture21.PNG)
+[![22](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture22.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture22.PNG)
 
 here I don't know where to search or where could be the location of what I search about.  I tried keyword search with autopsy but no luck with that until the hint we got that it's inside a pdf first come to my mind that we can search in metadata as if there is a location in pdf autopsy will detect that. bingo! there is a pdf called `almanac-start-a-garden.pdf`. when I searched in it I found this.  
 
