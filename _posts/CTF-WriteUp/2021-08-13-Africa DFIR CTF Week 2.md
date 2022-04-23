@@ -9,6 +9,7 @@ categories:
   - CTF-WriteUp
 toc: true
 ---
+
 <span style="color: #909090">Category: Digital Forensics</span>
 
 > Challenge : [Week 2](https://archive.org/download/Africa-DFIRCTF-2021-WK02)
@@ -33,7 +34,7 @@ Flag : <span style="color: #909090">4856</span>
 
 [![3](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture3.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture3.PNG)
 
-that is quite easy. we can get the sha256 hash value from windows Powershell with this Powershell utility [Get-FileHash](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash?view=powershell-7.1) : 
+that is quite easy. we can get the sha256 hash value from windows Powershell with this Powershell utility [Get-FileHash](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash?view=powershell-7.1) :
 
 then we will find the hash.
 
@@ -51,13 +52,13 @@ here we talk about established network connections but wait what is the time of 
 
 Time : <span style="color: #909090">2021-04-30 17:52:19</span>
 
-now we know the acquisition time of memory. so let's find the established network connection but first what is an established network connection? 
-Any `ESTABLISHED` socket means that there is a connection currently made there. Cool. 
+now we know the acquisition time of memory. so let's find the established network connection but first what is an established network connection?
+Any `ESTABLISHED` socket means that there is a connection currently made there. Cool.
 how do know how many ESTABLISHED network connections ? there is a plugin in volatility that scan for network information in the memory calls `windows.netscan.NetScan`.
 
 [![7](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture7.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture7.PNG)
 
-and we will see that they are at the time of the acquisition.  
+and we will see that they are at the time of the acquisition.
 
 Flag : <span style="color: #909090">10</span>
 
@@ -93,7 +94,7 @@ in this challenge we need the hash `md5` of process memory that we know the proc
 
 [![13](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture13.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture13.PNG)
 
-then we will get the hash `MD5` of the process dump. 
+then we will get the hash `MD5` of the process dump.
 
 [![14](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture14.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture14.PNG)
 
@@ -103,7 +104,9 @@ Flag : <span style="color: #909090">0b493d8e26f03ccd2060e0be85f430af</span>
 
 [![15](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture15.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture15.PNG)
 
-First, what is offset ?. The offset is the second part of a logical address that permits locating an Address inside a memory segment. An offset is not an address but the (distance|id) of this Address from the start of a memory segment starting at 0. An offset is also known as an effective address. to get the word starting at this offset `0x45BE876`. we can use any hex editor. in my case I will use bless hex editor then I will search with the offset to get the word as simple as that. 
+First, what is offset ?. The offset is the second part of a logical address that permits locating an Address inside a memory segment. An offset is not an address but
+the (distance|id) of this Address from the start of a memory segment starting at 0. An offset is also known as an effective address. to get the word starting at this
+offset `0x45BE876`. we can use any hex editor. in my case I will use bless hex editor then I will search with the offset to get the word as simple as that.
 
 [![16](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture16.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture16.PNG)
 
@@ -119,7 +122,7 @@ first, what is the parent process and child process ?. Parent Process: All the p
 
 first, what is the parent process and child process ?. Parent Process: All but how to know what is the parent process of powershell.exe ?. see that `PID` `5096` and that `PPID` `4352` from here we can find the parent process. but wait what is `PID` and `PPID` ? . `PID`: A process ID (PID) is a unique identifier assigned to a process while it runs. When the process ends, its PID is returned to the system. Each time you run a process, it has a different PID (it takes a long time for a PID to be reused by the system). You can use the PID to track the status of a process with the ps command or the jobs command, or to end a process with the kill command.` PPID`: A process that creates a new process is called a parent process; the new process is called a child process. The parent process ID (PPID) becomes associated with the new child process when it is created. The PPID is not used for job control.
 
-so now if we search with the `PPID` of powershell.exe we will get the parent process which will be the `PID` of the parent process. 
+so now if we search with the `PPID` of powershell.exe we will get the parent process which will be the `PID` of the parent process.
 
 [![19](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture19.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture19.PNG)
 
@@ -130,39 +133,32 @@ Flag : <span style="color: #909090">2021-04-30 17:39:48</span>
 [![20](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture20.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture20.PNG)
 
 here we talk about the full path and name of the last file opened in notepad. to get that there is a plugin in `windows.cmdline.CmdLine`.
-why this plugin? Commands entered into cmd.exe are processed by conhost.exe (csrss.exe prior to Windows 7). So even if an attacker managed to kill the cmd.exe prior to us obtaining a memory dump, there is still a good chance of recovering the history of the command line session from conhost.exe’s memory.  
+why this plugin? Commands entered into cmd.exe are processed by conhost.exe (csrss.exe prior to Windows 7). So even if an attacker managed to kill the cmd.exe prior to us obtaining a memory dump, there is still a good chance of recovering the history of the command line session from conhost.exe’s memory.
 
 [![26](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture26.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture26.PNG)
 
 Flag : <span style="color: #909090">C:\Users\JOHNDO~1\AppData\Local\Temp\7zO4FB31F24\accountNum</span>
 
-# Hocus Focus: 
+# Hocus Focus:
 
 [![21](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture21.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture21.PNG)
 
-in this challenge, we talk about a time that the suspect used the Brave browser. when we talk about that I think about `User Assist`. What is User Assist? The UserAssist key, a part of the Microsoft Windows registry, records the information related to programs run by a user on a Windows system such as running count and last execution date and time. we are lucky that volatility has a plugin that gives us this information calls `windows.registry.userassist.UserAssist`. 
+in this challenge, we talk about a time that the suspect used the Brave browser. when we talk about that I think about `User Assist`. What is User Assist? The UserAssist key, a part of the Microsoft Windows registry, records the information related to programs run by a user on a Windows system such as running count and last execution date and time. we are lucky that volatility has a plugin that gives us this information calls `windows.registry.userassist.UserAssist`.
 
 [![25](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture25.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture25.PNG)
 
 Flag : <span style="color: #909090">4:01:54</span>
+
 # Meetings:
 
 [![22](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture22.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture22.PNG)
 
-here I don't know where to search or where could be the location of what I search about.  I tried keyword search with autopsy but no luck with that until the hint we got that it's inside a pdf first come to my mind that we can search in metadata as if there is a location in pdf autopsy will detect that. bingo! there is a pdf called `almanac-start-a-garden.pdf`. when I searched in it I found this.  
+here I don't know where to search or where could be the location of what I search about. I tried keyword search with autopsy but no luck with that until the hint we got that it's inside a pdf first come to my mind that we can search in metadata as if there is a location in pdf autopsy will detect that. bingo! there is a pdf called `almanac-start-a-garden.pdf`. when I searched in it I found this.
 
 [![23](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture23.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture23.PNG)
 
-if we take this coordinate to any online website to get location we will find the flag. 
+if we take this coordinate to any online website to get location we will find the flag.
 
 [![24](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture24.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture24.PNG)
 
 Flag : <span style="color: #909090">Victoria Falls</span>
-
-
-
-
-
-
-
-
