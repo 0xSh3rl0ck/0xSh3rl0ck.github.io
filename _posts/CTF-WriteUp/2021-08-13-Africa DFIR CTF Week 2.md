@@ -104,9 +104,7 @@ Flag : <span style="color: #909090">0b493d8e26f03ccd2060e0be85f430af</span>
 
 [![15](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture15.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture15.PNG)
 
-First, what is offset ?. The offset is the second part of a logical address that permits locating an Address inside a memory segment. An offset is not an address but
-the distance or id of this Address from the start of a memory segment starting at 0. An offset is also known as an effective address. to get the word starting at this
-offset `0x45BE876`. we can use any hex editor. in my case I will use bless hex editor then I will search with the offset to get the word as simple as that.
+First, what is offset ?. The offset is the second part of a logical address that permits locating an Address inside a memory segment. An offset is not an address but the distance or id of this Address from the start of a memory segment starting at 0. An offset is also known as an effective address. to get the word starting at this offset `0x45BE876`. we can use any hex editor. in my case I will use bless hex editor then I will search with the offset to get the word as simple as that.
 
 [![16](/assets/images/CTF-WriteUp/DFIR-WEEK-2/Capture16.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture16.PNG)
 
