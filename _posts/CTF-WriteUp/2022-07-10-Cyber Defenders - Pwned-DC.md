@@ -24,6 +24,8 @@ Magnet
 
 We can solve this question in many ways: easy one that we can search for the OS Product name in the AD-ACLs json files which is provided with the challenge in the `20211122102526_computers.json` file.but first we can use online formatter to make it easy to read, i used this [website](https://jsonformatter.curiousconcept.com/#).
 
-[![1](assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)](/assets/images/CTF-WriteUp/DFIR-WEEK-1/Capture11.PNG)
+[![2](assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)](assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)
+
+another way is 
 
 
