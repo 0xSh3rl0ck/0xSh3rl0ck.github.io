@@ -7,13 +7,14 @@ ribbon: Beige
 description: "This is Week 2 from Africa DFIR CTF, which talks about Memory Dump Forensics."
 categories:
   - CTF-WriteUp
+  - Digital Forensics
+  - Malware Analysis
 toc: true
 ---
 
-<span style="color: #909090">Category: Digital Forensics</span>
-<span style="color: #909090">Category: Malware Analysis</span>
+<span style="color: #909090">Category: Digital Forensics, Malware Analysis</span>
 
-> Challenge : [Week 2](https://archive.org/download/Africa-DFIRCTF-2021-WK02)
+> Challenge : [challengelink](https://archive.org/download/Africa-DFIRCTF-2021-WK02)
 
 This week is talk about ram forensics. Memory forensics (sometimes referred to as memory analysis) refers to the analysis of volatile data in a computer's memory dump. Information security professionals conduct memory forensics to investigate and identify attacks or malicious behaviors that do not leave easily detectable tracks on hard drive data.
 
