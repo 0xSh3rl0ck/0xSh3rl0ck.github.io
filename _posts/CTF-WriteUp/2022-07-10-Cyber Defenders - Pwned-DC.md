@@ -2,7 +2,7 @@
 title: "Cyber Defenders: Pwned DC"
 classes: wide
 header:
-  teaser: /assets/images/CTF-WriteUp/Cyber Defenders - Pwned DC/1.PNG
+  teaser: assets\images\CTF-WriteUp\Cyber Defenders - Pwned DC1.PNG
 ribbon: Beige
 description: "This is Week 2 from Africa DFIR CTF, which talks about Memory Dump Forensics."
 categories:
