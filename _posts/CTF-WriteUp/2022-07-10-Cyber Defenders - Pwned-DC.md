@@ -3,7 +3,7 @@ title: "Cyber Defenders: Pwned DC"
 classes: wide
 header:
   teaser: /assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/1.PNG
-ribbon: Black
+ribbon: gray
 description: "An ActiveDirectory compromise case from Cyber Defenders"
 categories:
   - CTF-WriteUp
@@ -46,4 +46,15 @@ as we see here there was unplanned power off and the time the PC01 until this un
 Flag : <span style="color: #909090">11:31</span>
 
 # #3	Who was the last logged-in user on PC01?
+
+for this question we want to know that last logged-in user we can also find that in Windows Event logs in `\Windows\System32\winevt\Logs\Security.evtx` which store A successful account logon event with event id `4624` but so i will use Event Viewer to get that. by filtering the logs with `4624` we will get this output.
+
+[![5](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/5.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/5.PNG)
+
+there is to many logs so we can filter them by Date and Time also to get the last logged-in user.if we open the last event.we will find the last logged-in user on PC01.
+
+[![6](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/6.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/6.PNG)
+
+Flag : <span style="color: #909090">0xMohammed</span>
+
 
