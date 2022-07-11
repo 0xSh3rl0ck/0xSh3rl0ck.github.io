@@ -57,6 +57,31 @@ there is to many logs so we can filter them by Date and Time also to get the las
 
 Flag : <span style="color: #909090">0xMohammed</span>
 
+# #4	What is the IP address of PC01?
+
+we can get the ip address of PC01 from registry hive `HKEY_LOCAL_MACHINE\SYSTEM` under `\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\` so we can use RegRipper to scan the hive and get the answer to us.
+
+[![7](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/7.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/7.PNG)
+
+Flag : <span style="color: #909090">192.168.112.142</span>
+
+# #5	Which port was assigned to man service on PC01?
+
+the services which is running on the pc and assigned ports to it is stored in `Windows/System32/drivers/etc/services` file. so we can open it using any text editor to find the port assigned to man services.
+
+[![8](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/8.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/8.PNG)
+
+Flag : <span style="color: #909090">9535</span>
 
 
+# #6	What is the "Business.xlsx" LogFile Sequence Number?
 
+First what is MFT ? The MFT is a set of FILE records. Each file of the volume is completely described by one or more of these FILE Records and $LogFile Sequence Number (LSN) changes every time the record is modified. which is stored in the MFT.
+Each LSN is a 64-bit number containing the following components: a sequence number and an offset. An offset is stored in the lower part of an LSN, its value is a number of 8-byte increments from the beginning of a log file. This offset points to an LFS structure containing a client buffer and related metadata, this structure is called an LFS record. A sequence number is stored in the higher part, it’s a value from a counter which is incremented when a log file is wrapped (when a new structure is written to the beginning of the circular area, not to the end of this area).
+we can get the that using MFTECmd and save the output to csv using command `MFTECmd.exe -f "C:\Temp\SomeMFT" --csv "c:\temp\out"`.
+after that we can search for the Business.xlsx file then we will find the LogFile Sequence Number.
+
+[![9](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/9.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/9.PNG)
+
+
+# #7	What is the GUID of the C drive on PC01 machine?
