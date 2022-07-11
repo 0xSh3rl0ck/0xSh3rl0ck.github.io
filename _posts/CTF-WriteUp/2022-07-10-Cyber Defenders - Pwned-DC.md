@@ -19,6 +19,9 @@ An ActiveDirectory compromise case: adversaries were able to take over corporate
 
 **Tools:**
 Magnet
+FTK
+Autopsy
+
 
 # #1	What is the OS Product name of PC01?
 
@@ -26,6 +29,21 @@ We can solve this question in many ways: easy one that we can search for the OS 
 
 [![2](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)
 
-another way to find the OS Product name from the registry. 
+another way to find the OS Product name from the registry hive `HKEY_LOCAL_MACHINE\Software`. we can use RegRipper to scan the registry hive and get to us the OS Product name or simply we can use Autopsy Plugins to do that for us.by going to Operating System information in Data Artifact section in Autopsy. we will see the same result.
 
+[![3](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/3.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/3.PNG)
+
+Flag : <span style="color: #909090">Windows 10 Enterprise 2016 LTSB</span>
+
+# #2	On 21st November, there was unplanned power off for PC01 machine. How long was PC01 powered on till this shutdown?
+
+Here he is asking about the time that PC01 was on till the unplanned power off. we can check Windows Event logs to get this info from `\Windows\System32\winevt\Logs\System.evtx` which stores this information, so we can use TurnedOnTimesView to view this information to us. 
+
+[![4](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/4.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/4.PNG)
+
+as we see here there was unplanned power off and the time the PC01 until this unplanned power off is `11:31`.
+
+Flag : <span style="color: #909090">11:31</span>
+
+# #3	Who was the last logged-in user on PC01?
 
