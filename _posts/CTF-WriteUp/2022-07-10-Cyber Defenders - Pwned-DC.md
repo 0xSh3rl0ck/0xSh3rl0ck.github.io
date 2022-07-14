@@ -83,5 +83,7 @@ after that we can search for the Business.xlsx file then we will find the LogFil
 
 [![9](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/9.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/9.PNG)
 
+Flag : <span style="color: #909090">1422361276</span>
 
 # #7	What is the GUID of the C drive on PC01 machine?
+
