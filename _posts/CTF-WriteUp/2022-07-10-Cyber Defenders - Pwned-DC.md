@@ -129,4 +129,32 @@ Flag : <span style="color: #909090">asd</span>
 
 # #11	Which volatility 2 profile should be used to analyze the memory image?
 
-we will use volatility to analyse the memory image, so we will use `imageinfo` plugin to give us the profile. 
+we will use volatility to analyse the memory image, so we will use `imageinfo` plugin to give us the profile.we will notice that there is too many profiles suggested so we need to make sure from the profile.
+
+[![17](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/17.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/17.PNG)
+
+here i will use vol3 to get the profile with smart way :D. we can dump the registry hive `HKEY_LOCAL_MACHINE\Software` using vol3 then analyse it to get the right profile.so first i start with `windows.registry.hivelist.HiveList` plugin to list available registry hives.
+
+[![18](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/18.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/18.PNG)
+
+then we need to dump the Software Registry hive. so i used `windows.registry.hivelist` plugin to dump it.
+
+[![19](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/19.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/19.PNG)
+
+then we need to analyse the registry. we can use Registry Explorer for that. then to get the right profile we can go to the key `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion` we will see subkeys which is `CurrentBuild=14393` and `ProductName=Windows Server 2016 Standard Evaluation` that's all we need, then we are now Sure from the right profile.
+
+[![20](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/20.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/20.PNG)
+
+Flag : <span style="color: #909090">Win2016x64_14393</span>
+
+# #12	Analyzing the memory what is the physical address of the SOFTWARE registry hive?
+
+for this task we can return to use vol2 to get physical address as what we got from vol3 was the Virtual address. so we will use the profile that we got and `hivelist` plugin to list all registry hives with their Virtual and Physical addresses.
+
+[![21](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/21.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/21.PNG)
+
+Flag : <span style="color: #909090">0x00000000040f7000</span>
+
+# #13	What is the master key of the user "0xMohammed"?
+
+
