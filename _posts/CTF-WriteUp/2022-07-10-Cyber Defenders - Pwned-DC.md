@@ -658,32 +658,18 @@ Flag : <span style="color: #909090">calimalimodumator.exe</span>
 [File Record - Concept](https://flatcap.github.io/linux-ntfs/ntfs/concepts/file_record.html#:~:text=The%20sequence%20number%20is%20a,or%20the%20driver%20itself%3F)  
 [How the $LogFile works?](https://dfir.ru/2019/02/16/how-the-logfile-works/)    
 [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table#:~:text=The%20first%2016%20bytes%20of,GUID%20unique%20to%20the%20partition)  
-[Investigating USB Drives](https://eforensicsmag.com/investigating-usb-drives-using-mount-points-not-drive-letters-by-ali-hadi/)
-
-[USB Devices Redux](http://windowsir.blogspot.com/2022/05/usb-devices-redux.html)
-
-[Windows SRUM Forensics](https://www.youtube.com/watch?v=Uw8n4_o-ETM)
-
-[System Resource Utilization Monitor](https://isc.sans.edu/diary/System+Resource+Utilization+Monitor/21927)
-
-[Analyze LNK Files](https://www.magnetforensics.com/blog/forensic-analysis-of-lnk-files/)
-
-[Introduction to Memory Forensics with Volatility 3](https://dfir.science/2022/02/Introduction-to-Memory-Forensics-with-Volatility-3)
-
-[Volatility 3 CheatSheet](https://blog.onfvp.com/post/volatility-cheatsheet/)
-
-[Schtasks.exe - Win32 apps](https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks)
-
-[Scheduled Task/Job](https://attack.mitre.org/techniques/T1053/005/)
-
-[Memory Forensics](https://icegrave0391.github.io/2020/03/07/memfor/)
-
-[volshell CheatSheet](https://github.com/0xMohammed/MISC/blob/main/CheatSheet/volshell.pdf)
-
-[DeepDive Challenge from cyberdefenders](https://detectivestrings.github.io/walkthrough/cyberdefenders/memory%20forensics/dfir/DeepDive/#9--what-is-the-pooltag-of-the-malicious-process-in-ascii)
-
-[DarkSide Ransomware](https://www.pcrisk.com/removal-guides/18504-darkside-ransomware)
-
-[FileVersionInfo.InternalName Property](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo.internalname?view=net-6.0)
-
-[FILE_OBJECT structure](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ns-wdm-_file_object)
+[Investigating USB Drives](https://eforensicsmag.com/investigating-usb-drives-using-mount-points-not-drive-letters-by-ali-hadi/)  
+[USB Devices Redux](http://windowsir.blogspot.com/2022/05/usb-devices-redux.html)  
+[Windows SRUM Forensics](https://www.youtube.com/watch?v=Uw8n4_o-ETM)  
+[System Resource Utilization Monitor](https://isc.sans.edu/diary/System+Resource+Utilization+Monitor/21927)  
+[Analyze LNK Files](https://www.magnetforensics.com/blog/forensic-analysis-of-lnk-files/)  
+[Introduction to Memory Forensics with Volatility 3](https://dfir.science/2022/02/Introduction-to-Memory-Forensics-with-Volatility-3)  
+[Volatility 3 CheatSheet](https://blog.onfvp.com/post/volatility-cheatsheet/)  
+[Schtasks.exe - Win32 apps](https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks)  
+[Scheduled Task/Job](https://attack.mitre.org/techniques/T1053/005/)  
+[Memory Forensics](https://icegrave0391.github.io/2020/03/07/memfor/)  
+[volshell CheatSheet](https://github.com/0xMohammed/MISC/blob/main/CheatSheet/volshell.pdf)  
+[DeepDive Challenge from cyberdefenders](https://detectivestrings.github.io/walkthrough/cyberdefenders/memory%20forensics/dfir/DeepDive/#9--what-is-the-pooltag-of-the-malicious-process-in-ascii)  
+[DarkSide Ransomware](https://www.pcrisk.com/removal-guides/18504-darkside-ransomware)  
+[FileVersionInfo.InternalName Property](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo.internalname?view=net-6.0)  
+[FILE_OBJECT structure](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ns-wdm-_file_object)  
