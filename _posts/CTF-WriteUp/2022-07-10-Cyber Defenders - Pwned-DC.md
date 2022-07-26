@@ -17,27 +17,28 @@ toc: true
 **Scenario:**
 An ActiveDirectory compromise case: adversaries were able to take over the corporate domain controller. Investigate the case and reveal the Who, When, What, Where, Why, and How.
 
-#### Tools
-   1. <a href="https://www.magnetforensics.com/free-trial/" style="color:#0000EE;">Magnet</a>   
-   2. <a href="https://www.exterro.com/forensic-toolkit" style="color:#0000EE;">FTK</a>   
-   3. <a href="https://www.autopsy.com/download/" style="color:#0000EE;">Autopsy</a> 
-   4. <a href="https://github.com/keydet89/RegRipper3.0" style="color:#0000EE;">RegRipper</a> 
-   5. <a href="https://github.com/markmckinnon/Autopsy-Plugins" style="color:#0000EE;">Autopsy-Plugins</a> 
-   6. <a href="https://www.nirsoft.net/utils/computer_turned_on_times.html" style="color:#0000EE;">TurnedOnTimesView v1.46</a> 
-   7. <a href="https://f001.backblazeb2.com/file/EricZimmermanTools/net6/RegistryExplorer.zip" style="color:#0000EE;">RegistryExplorer</a>
-   8. <a href="http://www.orionforensics.com/forensics-tools/usb-forensic-tracker/" style="color:#0000EE;">USB Forensic Tracker</a> 
-   9. <a href="https://4n6-outlook-forensics-wizard.apponic.com/download/" style="color:#0000EE;">4n6 Outlook Forensics Wizard</a> 
-   10. <a href="https://arsenalrecon.com/downloads/" style="color:#0000EE;">Arsenal Image Mounter</a>
-   11. <a href="https://github.com/volatilityfoundation/volatility" style="color:#0000EE;">volatility2</a>
-   12. <a href="https://github.com/volatilityfoundation/volatility3" style="color:#0000EE;">volatility3</a>
-   13. <a href="https://github.com/mandiant/capa" style="color:#0000EE;">Capa-Explorer</a>
-   14. <a href="https://github.com/EricZimmerman/MFTECmd" style="color:#0000EE;">MFTECmd</a>
-   15. <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools" style="color:#0000EE;">WinDbg</a>
-   16. <a href="https://sourceforge.net/projects/fakenet/#:~:text=FakeNet%20is%20Windows%20network%20simulation,be%20observed%20by%20an%20analyst." style="color:#0000EE;">FakeNet</a>
-   17. <a href="https://github.com/decalage2/oletools" style="color:#0000EE;">oletools</a>
-   18. <a href="https://www.wireshark.org/download.html" style="color:#0000EE;">wireshark</a>
-   19. <a href="http://sandsprite.com/blogs/index.php?uid=7&pid=152" style="color:#0000EE;">scdbg</a>
-   20. <a href="http://angusj.com/resourcehacker/" style="color:#0000EE;">Resource Hacker</a>
+## Tools
+   1. <a href="https://www.magnetforensics.com/free-trial/" style="color:#808080;">Magnet</a>   
+   2. <a href="https://www.exterro.com/forensic-toolkit" style="color:#808080;">FTK</a>   
+   3. <a href="https://www.autopsy.com/download/" style="color:#808080;">Autopsy</a> 
+   4. <a href="https://github.com/keydet89/RegRipper3.0" style="color:#808080;">RegRipper</a> 
+   5. <a href="https://github.com/markmckinnon/Autopsy-Plugins" style="color:#808080;">Autopsy-Plugins</a> 
+   6. <a href="https://www.nirsoft.net/utils/computer_turned_on_times.html" style="color:#808080;">TurnedOnTimesView v1.46</a> 
+   7. <a href="https://f001.backblazeb2.com/file/EricZimmermanTools/net6/RegistryExplorer.zip" style="color:#808080;">RegistryExplorer</a>
+   8. <a href="http://www.orionforensics.com/forensics-tools/usb-forensic-tracker/" style="color:#808080;">USB Forensic Tracker</a> 
+   9. <a href="https://4n6-outlook-forensics-wizard.apponic.com/download/" style="color:#808080;">4n6 Outlook Forensics Wizard</a> 
+   10. <a href="https://arsenalrecon.com/downloads/" style="color:#808080;">Arsenal Image Mounter</a>
+   11. <a href="https://github.com/volatilityfoundation/volatility" style="color:#808080;">volatility2</a>
+   12. <a href="https://github.com/volatilityfoundation/volatility3" style="color:#808080;">volatility3</a>
+   13. <a href="https://github.com/mandiant/capa" style="color:#808080;">Capa-Explorer</a>
+   14. <a href="https://github.com/EricZimmerman/MFTECmd" style="color:#808080;">MFTECmd</a>
+   15. <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools" style="color:#808080;">WinDbg</a>
+   16. <a href="https://sourceforge.net/projects/fakenet/#:~:text=FakeNet%20is%20Windows%20network%20simulation,be%20observed%20by%20an%20analyst." style="color:#808080;">FakeNet</a>
+   17. <a href="https://github.com/decalage2/oletools" style="color:#808080;">oletools</a>
+   18. <a href="https://www.wireshark.org/download.html" style="color:#808080;">wireshark</a>
+   19. <a href="http://sandsprite.com/blogs/index.php?uid=7&pid=152" style="color:#808080;">scdbg</a>
+   20. <a href="http://angusj.com/resourcehacker/" style="color:#808080;">Resource Hacker</a>
+   21. <a href="https://github.com/MarkBaggett/srum-dump/releases" style="color:#808080;">srum-dump</a>
 
 # #1	What is the OS Product name of PC01?
 
@@ -651,3 +652,24 @@ so we need first to know that the question asks for FileVersionInfo.InternalName
 Flag : <span style="color: #909090">calimalimodumator.exe</span>
 
 # #32	Analyzing the ransomware file. what is the API used to get the geographical location?
+
+
+## Refrences 
+[File Record - Concept](https://flatcap.github.io/linux-ntfs/ntfs/concepts/file_record.html#:~:text=The%20sequence%20number%20is%20a,or%20the%20driver%20itself%3F)  
+[How the $LogFile works?](https://dfir.ru/2019/02/16/how-the-logfile-works/)    
+[GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table#:~:text=The%20first%2016%20bytes%20of,GUID%20unique%20to%20the%20partition)  
+[Investigating USB Drives](https://eforensicsmag.com/investigating-usb-drives-using-mount-points-not-drive-letters-by-ali-hadi/)
+[USB Devices Redux](http://windowsir.blogspot.com/2022/05/usb-devices-redux.html)
+[Windows SRUM Forensics](https://www.youtube.com/watch?v=Uw8n4_o-ETM)
+[System Resource Utilization Monitor](https://isc.sans.edu/diary/System+Resource+Utilization+Monitor/21927)
+[Analyze LNK Files](https://www.magnetforensics.com/blog/forensic-analysis-of-lnk-files/)
+[Introduction to Memory Forensics with Volatility 3](https://dfir.science/2022/02/Introduction-to-Memory-Forensics-with-Volatility-3)
+[Volatility 3 CheatSheet](https://blog.onfvp.com/post/volatility-cheatsheet/)
+[Schtasks.exe - Win32 apps](https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks)
+[Scheduled Task/Job](https://attack.mitre.org/techniques/T1053/005/)
+[Memory Forensics](https://icegrave0391.github.io/2020/03/07/memfor/)
+[volshell CheatSheet](https://github.com/0xMohammed/MISC/blob/main/CheatSheet/volshell.pdf)
+[DeepDive Challenge from cyberdefenders](https://detectivestrings.github.io/walkthrough/cyberdefenders/memory%20forensics/dfir/DeepDive/#9--what-is-the-pooltag-of-the-malicious-process-in-ascii)
+[DarkSide Ransomware](https://www.pcrisk.com/removal-guides/18504-darkside-ransomware)
+[FileVersionInfo.InternalName Property](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo.internalname?view=net-6.0)
+[FILE_OBJECT structure](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ns-wdm-_file_object)
