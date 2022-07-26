@@ -17,7 +17,7 @@ toc: true
 **Scenario:**
 An ActiveDirectory compromise case: adversaries were able to take over the corporate domain controller. Investigate the case and reveal the Who, When, What, Where, Why, and How.
 
-## Tools
+# Tools
    1. <a href="https://www.magnetforensics.com/free-trial/" style="color:#808080;">Magnet</a>   
    2. <a href="https://www.exterro.com/forensic-toolkit" style="color:#808080;">FTK</a>   
    3. <a href="https://www.autopsy.com/download/" style="color:#808080;">Autopsy</a> 
@@ -654,7 +654,7 @@ Flag : <span style="color: #909090">calimalimodumator.exe</span>
 # #32	Analyzing the ransomware file. what is the API used to get the geographical location?
 
 
-## Refrences 
+# Refrences 
 [File Record - Concept](https://flatcap.github.io/linux-ntfs/ntfs/concepts/file_record.html#:~:text=The%20sequence%20number%20is%20a,or%20the%20driver%20itself%3F)  
 [How the $LogFile works?](https://dfir.ru/2019/02/16/how-the-logfile-works/)    
 [GUID Partition Table](https://en.wikipedia.org/wiki/GUID_Partition_Table#:~:text=The%20first%2016%20bytes%20of,GUID%20unique%20to%20the%20partition)  
