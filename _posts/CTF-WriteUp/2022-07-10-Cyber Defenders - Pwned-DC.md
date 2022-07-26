@@ -6,7 +6,7 @@ header:
 ribbon: gray
 description: "An ActiveDirectory compromise case from Cyber Defenders"
 categories:
-  - CTF-WriteUp
+  - cyberdefenders
 toc: true
 ---
 
@@ -39,6 +39,7 @@ An ActiveDirectory compromise case: adversaries were able to take over the corpo
    19. <a href="http://sandsprite.com/blogs/index.php?uid=7&pid=152" style="color:#808080;">scdbg</a>
    20. <a href="http://angusj.com/resourcehacker/" style="color:#808080;">Resource Hacker</a>
    21. <a href="https://github.com/MarkBaggett/srum-dump/releases" style="color:#808080;">srum-dump</a>
+   22. <a href="https://www.winitor.com/download" style="color:#808080;">pestudio</a>
 
 # #1	What is the OS Product name of PC01?
 
@@ -653,6 +654,11 @@ Flag : <span style="color: #909090">calimalimodumator.exe</span>
 
 # #32	Analyzing the ransomware file. what is the API used to get the geographical location?
 
+we can solve this questions by open the ransomware file with pestudio as it's great tool to extract the functions used by the malicious files. then after going to functions tab we can notice that there is function that known as it's deals with geographical location.
+
+[![52](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/52.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/52.PNG)
+
+Flag : <span style="color: #909090">GetLocaleInfoA</span>
 
 # Refrences 
 [File Record - Concept](https://flatcap.github.io/linux-ntfs/ntfs/concepts/file_record.html#:~:text=The%20sequence%20number%20is%20a,or%20the%20driver%20itself%3F)  
