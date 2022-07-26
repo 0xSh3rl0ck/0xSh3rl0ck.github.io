@@ -6,7 +6,7 @@ header:
 ribbon: gray
 description: "An ActiveDirectory compromise case from Cyber Defenders"
 categories:
-  - cyberdefenders
+  - CTF-WriteUp
 toc: true
 ---
 
