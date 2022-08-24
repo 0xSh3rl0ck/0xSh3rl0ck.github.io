@@ -30,7 +30,6 @@ An ActiveDirectory compromise case: adversaries were able to take over the corpo
    * <a href="https://arsenalrecon.com/downloads/" style="color:#808080;">Arsenal Image Mounter</a>
    * <a href="https://github.com/volatilityfoundation/volatility" style="color:#808080;">volatility2</a>
    * <a href="https://github.com/volatilityfoundation/volatility3" style="color:#808080;">volatility3</a>
-   * <a href="https://github.com/mandiant/capa" style="color:#808080;">Capa-Explorer</a>
    * <a href="https://github.com/EricZimmerman/MFTECmd" style="color:#808080;">MFTECmd</a>
    * <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools" style="color:#808080;">WinDbg</a>
    * <a href="https://sourceforge.net/projects/fakenet/#:~:text=FakeNet%20is%20Windows%20network%20simulation,be%20observed%20by%20an%20analyst." style="color:#808080;">FakeNet</a>
@@ -39,7 +38,7 @@ An ActiveDirectory compromise case: adversaries were able to take over the corpo
    * <a href="http://sandsprite.com/blogs/index.php?uid=7&pid=152" style="color:#808080;">scdbg</a>
    * <a href="http://angusj.com/resourcehacker/" style="color:#808080;">Resource Hacker</a>
    * <a href="https://github.com/MarkBaggett/srum-dump/releases" style="color:#808080;">srum-dump</a>
-   * <a href="https://www.winitor.com/download" style="color:#808080;">pestudio</a>
+   * <a href="https://github.com/T1m3M/PEscope" style="color:#808080;">PEscope Tool</a>
 
 # #1	What is the OS Product name of PC01?
 
@@ -195,7 +194,7 @@ Flag : <span style="color: #909090">1652c67aa6719519492e67d1b39cab91e7804eb26b25
 
 # #14	Using the provided word list, what is the password of the user "0xMohammed"?
 
-we need first to get the NTLM hash of the user "0xMohammed" which relies on password hashing, which is a one-way function that produces a string of text based on an input file; Kerberos leverages encryption, which is a two-way function that scrambles and unlocks information using an encryption key and decryption key respectively. to get its password. we can find it in the output of the previous question.
+we need first to get the NTLM hash of the user "0xMohammed" which relies on password hashing, which is a one-way function that produces a string of text based on an input file, Kerberos leverages encryption, which is a two-way function that scrambles and unlocks information using an encryption key and decryption key respectively. to get its password. we can find it in the output of the previous question.
 
 [![25](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/25.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/25.PNG)
 
@@ -649,7 +648,7 @@ Flag : <span style="color: #909090">0xffffba033e631460</span>
 
 # #30	What is the physical address where the ransomware file is stored in memory?
 
-we can got it using volshell after finding the offset that we find later of the malicious file `svchost.exe` and converting it from virtual to physical using `addrspace().vtop(V.address)` i will use the trick that i used later to convert it to hex in one step.
+we can got it using volshell after finding the offset that we find previously of the malicious file `svchost.exe` and converting it from virtual to physical using `addrspace().vtop(V.address)` i will use the trick that i used previously to convert it to hex in one step.
 
 ```
 $ echo "hex(addrspace().vtop(0xba033f477bc0))" | python2.7 vol.py -f /memory.dmp --profile=Win2016x64_14393 volshell
@@ -678,13 +677,13 @@ SharedCacheMap 0x13c090bc0   None   \Device\HarddiskVolume4\Users\Administrator\
 
 so we need first to know that the question asks for FileVersionInfo.InternalName Property which include string vlaue which holds The internal name of the file. If none exists, this property will contain the original name of the file without the extension. so we can find that with using Resource Hacker. then after we go to Resource Hacker and upload `file.None.0xffffba033f565910.dat` to it then we go to the Version Info Section which holds tha internal name that we need then we will find it.
 
-[![51](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/50.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/51.PNG)
+[![51](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/51.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/51.PNG)
 
 Flag : <span style="color: #909090">calimalimodumator.exe</span>
 
 # #32	Analyzing the ransomware file. what is the API used to get the geographical location?
 
-we can solve this questions by open the ransomware file with pestudio as it's great tool to extract the functions used by the malicious files. then after going to functions tab we can notice that there is function that known as it's deals with geographical location.
+we can solve this questions by using the great tool made by my friend Abdelrahman Nasr (T1m3-m4ch1n3) ❤️ which is used for doing a basic static analysis to a PE file with a colorful CLI that i like alot :D. then after we pass the exe to it will extract the APIs from it then we can get our answer.
 
 [![52](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/52.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/52.PNG)
 
