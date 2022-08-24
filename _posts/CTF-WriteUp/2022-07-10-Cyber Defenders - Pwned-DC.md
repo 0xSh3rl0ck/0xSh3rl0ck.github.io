@@ -18,11 +18,11 @@ toc: true
 An ActiveDirectory compromise case: adversaries were able to take over the corporate domain controller. Investigate the case and reveal the Who, When, What, Where, Why, and How.
 
 # Tools
-   1. <a href="https://www.magnetforensics.com/free-trial/" style="color:#808080;">Magnet</a>   
-   2. <a href="https://www.exterro.com/forensic-toolkit" style="color:#808080;">FTK</a>   
-   3. <a href="https://www.autopsy.com/download/" style="color:#808080;">Autopsy</a> 
-   4. <a href="https://github.com/keydet89/RegRipper3.0" style="color:#808080;">RegRipper</a> 
-   5. <a href="https://github.com/markmckinnon/Autopsy-Plugins" style="color:#808080;">Autopsy-Plugins</a> 
+   * <a href="https://www.magnetforensics.com/free-trial/" style="color:#808080;">Magnet</a>   
+   * <a href="https://www.exterro.com/forensic-toolkit" style="color:#808080;">FTK</a>   
+   * <a href="https://www.autopsy.com/download/" style="color:#808080;">Autopsy</a> 
+   4. <a href="https://github.com/markmckinnon/Autopsy-Plugins" style="color:#808080;">Autopsy-Plugins</a> 
+   5. <a href="https://github.com/keydet89/RegRipper3.0" style="color:#808080;">RegRipper</a>  
    6. <a href="https://www.nirsoft.net/utils/computer_turned_on_times.html" style="color:#808080;">TurnedOnTimesView v1.46</a> 
    7. <a href="https://f001.backblazeb2.com/file/EricZimmermanTools/net6/RegistryExplorer.zip" style="color:#808080;">RegistryExplorer</a>
    8. <a href="http://www.orionforensics.com/forensics-tools/usb-forensic-tracker/" style="color:#808080;">USB Forensic Tracker</a> 
