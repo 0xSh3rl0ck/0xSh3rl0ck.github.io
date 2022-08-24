@@ -4,7 +4,7 @@ classes: wide
 header:
   teaser: /assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/1.PNG
 ribbon: gray
-description: "An ActiveDirectory compromise case from Cyber Defenders"
+description: "An ActiveDirectory compromise case: adversaries were able to take over corporate domain controller. Investigate the case and reveal the Who, When, What, Where, Why, and How."
 categories:
   - CTF-WriteUp
 toc: true
@@ -231,9 +231,35 @@ Flag : <span style="color: #909090">12/08/2021 04:47:48 AM</span>
 
 # #17	What is the IP address and port on which the attacker received the reverse shell? IP:PORT
 
+in this question first i thought that to get the IP:PORT of the attacker to run the Malicious Document then monitor the network traffic that happened so we might be lucky and find the IP:PORT of the attacker at first i waste a lot of time running it with OFFICE 2016 but When I despaired i tried it with OFFICE 2013 and it worked.
+so we can now run it and open FakeNet along with it, also we need to enable content to run the macros and see if there is something.
 
+[![54](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/54.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/54.PNG)
+
+as we see there is somthing that seems malicious which it's using GET Method that used to request data from a specified resource. and the IP:PORT revealed. also we can see that in the generated pcap from FakeNet.
+
+[![55](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/55.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/55.PNG)
+
+Flag : <span style="color: #909090">192.168.112.128:8080</span>
 # #18	Analyzing the reverse shell. What is the first argument given to InternetErrorDlg API?
 
+in this question we can start by analysing the Malicious Document so i will start analysing it using olevba. but got nothing usefull after that i used `olevba "Unpaid Invoice.xls" --show-pcode` to see if there is VBA Stomping and yeah there is an array it looks like that this is the shellcode.
+
+[![53](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/53.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/53.PNG)
+
+so we need to extract this array and put it in a new file to analyse it.
+
+[![56](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/56.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/56.PNG)
+
+then we will save it as .sc and i will use scdbg to analyse it. i tried with scdbg /f but just got this which also give us the IP:PORT from the shellcode. but didn't get the InternetErrorDlg API.
+
+[![57](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/57.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/57.PNG)
+
+so i thought to use `scdbg -s -1 /f` to make the number of steps unlimitted so we can extract everything from it. 
+
+[![58](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/58.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/58.PNG)
+
+Flag : <span style="color: #909090">11223344</span>
 # #19	What is the MITRE ID of the technique used by the attacker to achieve persistence?
 
 so first i will check Previous Command History in PowerShell Console to see if there is something malicious or related to achieving persistence as it's sometimes good place to start with. so we can check that at `\Users\administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt` then we will see that there is command executed with Schtasks.exe which Enables an administrator to create, delete, query, change, run, and end scheduled tasks on a local or remote computer.
