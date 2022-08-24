@@ -93,7 +93,6 @@ the services which is running on the pc and assigned ports to it is stored in `W
 
 Flag : <span style="color: #909090">9535</span>
 
-
 # #6	What is the "Business.xlsx" LogFile Sequence Number?
 
 First what is MFT ? The MFT is a set of FILE records. Each file of the volume is completely described by one or more of these FILE Records and $LogFile Sequence Number (LSN) changes every time the record is modified. which is stored in the MFT.
@@ -130,6 +129,8 @@ Flag : <span style="color: #909090">fad905b3-fb35-4dbd-ab31-a44f022809d2</span>
 I used Magnet to get the answer from `places.sqlite`. Which is a proto database of places visited, bookmarks, and attributes for those sites commonly visited by Firefox, which is located at `\Users\labib\AppData\Roaming\Mozilla\Firefox\Profiles\2305bdnv.default-release\places.sqlite` if we go to REFINED RESULTS then Google Searches we will find that he searched for `bluedemy.cyberdefenders.org` at 11/22/2021 7:45:55 PM "12-hour clock".
 
 [![14](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/14.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/14.PNG)
+
+Flag : <span style="color: #909090">bluedemy.cyberdefenders.org</span>
 
 # #9	How many bytes were received by firefox?
 
@@ -177,7 +178,7 @@ Flag : <span style="color: #909090">0x00000000040f7000</span>
 
 # #13	What is the master key of the user "0xMohammed"?
 
-to get the master key we can use windbg and mimikatz. so first we will go to windbg then select File -> Open Crash Dump then load the memory.dmp and start by `!analyze -v` to the analysis of the dump.  
+to get the master key we can use windbg and mimikatz. so first we will go to windbg then select File -> Open Crash Dump then load the memory.dmp and start by `!analyze -v` to start analysis of the dump.  
 
 [![22](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/22.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/22.PNG)
 
@@ -189,7 +190,8 @@ then as shown we can search for `lsass.exe` in the dump using `!process 0 0 lsas
 
 [![24](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/24.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/24.PNG)
 
-Flag : <span style="color: #909090">1652c67aa6719519492e67d1b39cab91e7804eb26b259ff351b60df34ee808804314cbfbcf03afbf3bae3ef2790f2c363ca0a9c8791e0e80d490c26afe77c3be</span>
+Flag : <span style="color: #909090">1652c67aa6719519492e67d1b39cab91e7804eb26b259ff351b60df34ee808804314cbfbcf0 
+3afbf3bae3ef2790f2c363ca0a9c8791e0e80d490c26afe77c3be</span>
 
 # #14	Using the provided word list, what is the password of the user "0xMohammed"?
 
@@ -702,7 +704,7 @@ Flag : <span style="color: #909090">GetLocaleInfoA</span>
 [Schtasks.exe - Win32 apps](https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks)  
 [Scheduled Task/Job](https://attack.mitre.org/techniques/T1053/005/)  
 [Memory Forensics](https://icegrave0391.github.io/2020/03/07/memfor/)  
-[volshell CheatSheet](https://github.com/0xMohammed/MISC/blob/main/CheatSheet/volshell.pdf)  
+[volshell CheatSheet by 0xMohammed and mohamed labib](https://github.com/0xMohammed/MISC/blob/main/CheatSheet/volshell.pdf)  
 [DeepDive Challenge from cyberdefenders](https://detectivestrings.github.io/walkthrough/cyberdefenders/memory%20forensics/dfir/DeepDive/#9--what-is-the-pooltag-of-the-malicious-process-in-ascii)  
 [DarkSide Ransomware](https://www.pcrisk.com/removal-guides/18504-darkside-ransomware)  
 [FileVersionInfo.InternalName Property](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo.internalname?view=net-6.0)  
