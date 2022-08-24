@@ -21,33 +21,35 @@ An ActiveDirectory compromise case: adversaries were able to take over the corpo
    * <a href="https://www.magnetforensics.com/free-trial/" style="color:#808080;">Magnet</a>   
    * <a href="https://www.exterro.com/forensic-toolkit" style="color:#808080;">FTK</a>   
    * <a href="https://www.autopsy.com/download/" style="color:#808080;">Autopsy</a> 
-   4. <a href="https://github.com/markmckinnon/Autopsy-Plugins" style="color:#808080;">Autopsy-Plugins</a> 
-   5. <a href="https://github.com/keydet89/RegRipper3.0" style="color:#808080;">RegRipper</a>  
-   6. <a href="https://www.nirsoft.net/utils/computer_turned_on_times.html" style="color:#808080;">TurnedOnTimesView v1.46</a> 
-   7. <a href="https://f001.backblazeb2.com/file/EricZimmermanTools/net6/RegistryExplorer.zip" style="color:#808080;">RegistryExplorer</a>
-   8. <a href="http://www.orionforensics.com/forensics-tools/usb-forensic-tracker/" style="color:#808080;">USB Forensic Tracker</a> 
-   9. <a href="https://4n6-outlook-forensics-wizard.apponic.com/download/" style="color:#808080;">4n6 Outlook Forensics Wizard</a> 
-   10. <a href="https://arsenalrecon.com/downloads/" style="color:#808080;">Arsenal Image Mounter</a>
-   11. <a href="https://github.com/volatilityfoundation/volatility" style="color:#808080;">volatility2</a>
-   12. <a href="https://github.com/volatilityfoundation/volatility3" style="color:#808080;">volatility3</a>
-   13. <a href="https://github.com/mandiant/capa" style="color:#808080;">Capa-Explorer</a>
-   14. <a href="https://github.com/EricZimmerman/MFTECmd" style="color:#808080;">MFTECmd</a>
-   15. <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools" style="color:#808080;">WinDbg</a>
-   16. <a href="https://sourceforge.net/projects/fakenet/#:~:text=FakeNet%20is%20Windows%20network%20simulation,be%20observed%20by%20an%20analyst." style="color:#808080;">FakeNet</a>
-   17. <a href="https://github.com/decalage2/oletools" style="color:#808080;">oletools</a>
-   18. <a href="https://www.wireshark.org/download.html" style="color:#808080;">wireshark</a>
-   19. <a href="http://sandsprite.com/blogs/index.php?uid=7&pid=152" style="color:#808080;">scdbg</a>
-   20. <a href="http://angusj.com/resourcehacker/" style="color:#808080;">Resource Hacker</a>
-   21. <a href="https://github.com/MarkBaggett/srum-dump/releases" style="color:#808080;">srum-dump</a>
-   22. <a href="https://www.winitor.com/download" style="color:#808080;">pestudio</a>
+   * <a href="https://github.com/markmckinnon/Autopsy-Plugins" style="color:#808080;">Autopsy-Plugins</a> 
+   * <a href="https://github.com/keydet89/RegRipper3.0" style="color:#808080;">RegRipper</a>  
+   * <a href="https://www.nirsoft.net/utils/computer_turned_on_times.html" style="color:#808080;">TurnedOnTimesView v1.46</a> 
+   * <a href="https://f001.backblazeb2.com/file/EricZimmermanTools/net6/RegistryExplorer.zip" style="color:#808080;">RegistryExplorer</a>
+   * <a href="http://www.orionforensics.com/forensics-tools/usb-forensic-tracker/" style="color:#808080;">USB Forensic Tracker</a> 
+   * <a href="https://4n6-outlook-forensics-wizard.apponic.com/download/" style="color:#808080;">4n6 Outlook Forensics Wizard</a> 
+   * <a href="https://arsenalrecon.com/downloads/" style="color:#808080;">Arsenal Image Mounter</a>
+   * <a href="https://github.com/volatilityfoundation/volatility" style="color:#808080;">volatility2</a>
+   * <a href="https://github.com/volatilityfoundation/volatility3" style="color:#808080;">volatility3</a>
+   * <a href="https://github.com/mandiant/capa" style="color:#808080;">Capa-Explorer</a>
+   * <a href="https://github.com/EricZimmerman/MFTECmd" style="color:#808080;">MFTECmd</a>
+   * <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools" style="color:#808080;">WinDbg</a>
+   * <a href="https://sourceforge.net/projects/fakenet/#:~:text=FakeNet%20is%20Windows%20network%20simulation,be%20observed%20by%20an%20analyst." style="color:#808080;">FakeNet</a>
+   * <a href="https://github.com/decalage2/oletools" style="color:#808080;">oletools</a>
+   * <a href="https://www.wireshark.org/download.html" style="color:#808080;">wireshark</a>
+   * <a href="http://sandsprite.com/blogs/index.php?uid=7&pid=152" style="color:#808080;">scdbg</a>
+   * <a href="http://angusj.com/resourcehacker/" style="color:#808080;">Resource Hacker</a>
+   * <a href="https://github.com/MarkBaggett/srum-dump/releases" style="color:#808080;">srum-dump</a>
+   * <a href="https://www.winitor.com/download" style="color:#808080;">pestudio</a>
 
 # #1	What is the OS Product name of PC01?
 
-We can solve this question in many ways: the easy one is that we can search for the OS Product name in the AD-ACLs JSON files which is provided with the challenge in the `20211122102526_computers.json` file. but first, we can use an online formatter to make it easy to read, I used this [website](https://jsonformatter.curiousconcept.com/#).
+We can solve this question in many ways. the easy one is that we can search for the OS Product name in the AD-ACLs JSON files which is provided with the challenge in the `20211122102526_computers.json` file. but first, we can use an online formatter to make it easy to read, I used this [website](https://jsonformatter.curiousconcept.com/#).
 
 [![2](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)
 
-another way to find the OS Product name from the registry hive is `HKEY_LOCAL_MACHINE\Software`. we can use RegRipper to scan the registry hive and to give us the OS Product name or simply we can use Autopsy Plugins to do that for us. by going to Operating System information in the Data Artifact section in Autopsy. we will see the same result.
+another way to find the OS Product name from the registry hive is `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion`. we can use Registry Explorer to open the registry hive and find the key then get the OS Product name or simply we can use Autopsy Plugins to do that for us. by going to Operating System information in the Data Artifact section in Autopsy. we will see the same result.
+
+[![59](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/59.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/59.PNG)
 
 [![3](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/3.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/3.PNG)
 
