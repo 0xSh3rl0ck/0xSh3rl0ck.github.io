@@ -691,6 +691,10 @@ We can solve these questions using the great tool by my friend Abdelrahman Nasr 
 
 Flag : <span style="color: #909090">GetLocaleInfoA</span>
 
+And finally, it's the end, and I hope you enjoyed this :). 
+
+[![giphy](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/giphy.gif)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/giphy.PNG)
+
 # Refrences 
 [File Record - Concept](https://flatcap.github.io/linux-ntfs/ntfs/concepts/file_record.html#:~:text=The%20sequence%20number%20is%20a,or%20the%20driver%20itself%3F)  
 [How the $LogFile works?](https://dfir.ru/2019/02/16/how-the-logfile-works/)    
