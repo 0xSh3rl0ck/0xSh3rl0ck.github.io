@@ -163,7 +163,7 @@ Then we need to dump the Software Registry hive. So I used the `windows.registry
 
 Then we need to analyze the registry. We can use Registry Explorer for that. Then to get the right profile, we can go to the key `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion`. We will see subkeys which are `CurrentBuild=14393` and `ProductName=Windows Server 2016 Standard Evaluation` that's all we need, then we are now Sure from the right profile.
 
-[![60](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/60.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/60.PNG)
+[![60](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/60.png)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/60.PNG)
 
 [![20](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/20.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/20.PNG)
 
