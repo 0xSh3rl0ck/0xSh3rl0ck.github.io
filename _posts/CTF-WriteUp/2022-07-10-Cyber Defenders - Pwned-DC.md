@@ -685,7 +685,7 @@ Flag : <span style="color: #909090">calimalimodumator.exe</span>
 
 # #32	Analyzing the ransomware file. What is the API used to get the geographical location?
 
-We can solve these questions using the great tool by my friend Abdelrahman Nasr (T1m3-m4ch1n3) ❤️ which is used for a basic static analysis of a PE file with a colorful CLI I like a lot:D. then after we pass the exe to it will extract the APIs from it, we can get our answer.
+We can solve these questions using the great tool by my friend Abdelrahman Nasr (T1m3-m4ch1n3) ❤️ which is used for a basic static analysis of a PE file with a colorful CLI I like a lot :D. then after we pass the exe to it will extract the APIs from it, we can get our answer.
 
 [![52](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/52.PNG)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/52.PNG)
 
