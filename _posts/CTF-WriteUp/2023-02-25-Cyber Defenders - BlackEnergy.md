@@ -23,7 +23,7 @@ A multinational corporation has been hit by a cyber attack that has led to the t
 
 # #1	Which volatility profile would be best for this machine?
 
-So First we need to determing whch profile is this image. we can start by `imageinfo` to see what we will get.
+So First we need to determine which profile this image is. we can start with `imageinfo` to see what we will get.
 
 ```
 Suggested Profile(s) : `WinXPSP2x86`, WinXPSP3x86 (Instantiated with WinXPSP2x86)
@@ -39,13 +39,14 @@ Suggested Profile(s) : `WinXPSP2x86`, WinXPSP3x86 (Instantiated with WinXPSP2x86
            Image date and time : 2023-02-13 18:29:11 UTC+0000
      Image local date and time : 2023-02-13 10:29:11 -0800
 ```
-we can see that Suggested Profile `WinXPSP2x86`.
+
+we can see that the Suggested Profile `WinXPSP2x86`.
 
 Flag : <span style="color: #909090">WinXPSP2x86</span>
 
 # #2 How many processes were running when the image was acquired?
 
-We can list process then see what was actve process in this time we can also get that time from `imageinfo` result in `Image date and time : 2023-02-13 18:29:11 UTC+0000`.
+We can list processes and then see what an active process is at this time as we can also get that time from `imageinfo` result in `Image date and time : 2023-02-13 18:29:11 UTC+0000`.
 so after getting the result from pslist.
 ```
 Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Start                          Exit                          
@@ -77,7 +78,7 @@ Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Star
 0x89a0fda0 DumpIt.exe              276   1484      1       25      0      0 2023-02-13 18:29:08 UTC+0000       
 ```
 
-we will notices that they are 25 process but we need only the active process. so we have 19 process only since that they are 6 process has been termiinated (taskmgr.exe, rootkit.exe, cmd.exe, notepad.exe, notepad.exe, notepad.exe).
+we will notice that they are 25 processes but we need only the active process. so we have 19 processes only since that they are 6 processes have been terminated (taskmgr.exe, rootkit.exe, cmd.exe, notepad.exe, notepad.exe, notepad.exe).
 
 Flag : <span style="color: #909090">19</span>
 
@@ -119,7 +120,7 @@ Flag : <span style="color: #909090">1960</span>
 
 # #4 What is the name of the most suspicious process?
 
-We can also get this suspicious process from the result of pslist. We wiil see that there is process called `rootkit.exe` which is not normal as it's obivious from it's name. we can also double check from `pstree` plugin.
+We can also get this suspicious process from the result of pslist. We will see that there is a process called `rootkit.exe` which is not normal as it's obvious from its name. we can also double-check from `pstree` plugin.
 
 ```
 Name                                                  Pid   PPid   Thds   Hnds Time
@@ -151,7 +152,7 @@ Name                                                  Pid   PPid   Thds   Hnds T
 . 0x8994a020:msmsgs.exe                               636   1484      2    157 2023-02-13 17:54:30 UTC+0000
 ```
 
-we will notice that this process is child from `explorer.exe` and has `cmd.exe` child also this is not normal behaviour.
+we will notice that this process is a child from `explorer.exe` and has `cmd.exe` child also this is not normal behavior.
 
 Flag : <span style="color: #909090">rootkit.exe</span>
 
@@ -203,17 +204,17 @@ Flags: CommitCharge: 9, MemCommit: 1, PrivateMemory: 1, Protection: 6
 0x000000000098003f 00               DB 0x0
 ```
 
-So here we will see from the output of `malfind` that there is suspicious process which is `svchost.exe` but how?. we can see VadS Protection: `PAGE_EXECUTE_READWRITE` which means the memory region is writable and executable but what that's means that means that the executable not normally loaded it's injected ! also as we see Magic number: A 2-byte value (0x4D5A) that identifies the file as an executable file in the MZ format. can we prove that ? of course. let's dump it using `malfind -p 880 -D ./` and go to virustotal to see what we will get.
+So here we will see from the output of `malfind` that there is a suspicious process which is `svchost.exe` but how?. we can see VadS Protection: `PAGE_EXECUTE_READWRITE` which means the memory region is writable and executable but that means that the executable is not normally loaded and it's injected! also as we see Magic number: A 2-byte value (0x4D5A) that identifies the file as an executable file in the MZ format. can we prove that ? of course. let's dump it using `malfind -p 880 -D ./` and go to virustotal to see what we will get.
 
 [![1](/assets/images/CTF-WriteUp/BlackEnergy/1.PNG)](/assets/images/CTF-WriteUp/BlackEnergy/1.PNG)
 
-so this is the process shows the highest likelihood of code injection.
+so this is the process that shows the highest likelihood of code injection. We can also see that we now deal with the famous Rootkit BlackEnergy as it's obvious from the name of the challenge. Black Energy is a sophisticated rootkit that has been used by cybercriminals to target various organizations and critical infrastructure systems, particularly in Ukraine. It was first discovered in 2007 and has since undergone several updates and modifications to make it more difficult to detect and remove.
 
 Flag : <span style="color: #909090">svchost.exe</span>
 
 # #6 There is an odd file referenced in the recent process. Provide the full path of that file.
 
-We can use the PID of the process `880` and search for handles of this process. Handles can be used to determine the relationships between processes, identify open files and network connections, and locate hidden or malicious processes. we can use `handles` plugin and speciify the PID of the process and filter only files since we know from the question that we need to find file `handles -p 880 -t File`.
+We can use the PID of the process `880` and search for handles of this process. Handles can be used to determine the relationships between processes, identify open files and network connections, and locate hidden or malicious processes. we can use `handles` plugin and specify the PID of the process and filter only files since we know from the question that we need to find file `handles -p 880 -t File`.
 
 ```
 Offset(V)     Pid     Handle     Access Type             Details
@@ -241,7 +242,7 @@ Offset(V)     Pid     Handle     Access Type             Details
 0x89999980    880      0x4a8   0x1200a0 File             \Device\NetBT_Tcpip_{B35F0A5F-EBC3-4B5D-800D-7C1B64B30F14}
 ```
 
-we found this `\Device\HarddiskVolume1\WINDOWS\system32\drivers\str.sys` that is strange. we can also found it in strings output of the dumped process.
+we found this `\Device\HarddiskVolume1\WINDOWS\system32\drivers\str.sys` that is strange. we can also find it in the strings output of the dumped process.
 
 [![2](/assets/images/CTF-WriteUp/BlackEnergy/2.PNG)](/assets/images/CTF-WriteUp/BlackEnergy/2.PNG)
 
@@ -249,7 +250,7 @@ Flag : <span style="color: #909090">C:\WINDOWS\system32\drivers\str.sys</span>
 
 # #7 What is the name of the injected dll file loaded from the recent process?
 
-An injected DLL (Dynamic Link Library) is a malicious code that is injected into a legitimate process in order to modify its behavior or to gain unauthorized access to the system. This technique is often used by malware to evade detection and to perform various malicious activities, such as stealing data, downloading additional malware, or providing remote access to the attacker. We can use `ldrmodules` plugin and specify the PID of that process `880` to get that. ldrmodules plugin lists all the DLLs that have been loaded into the memory space of the specified process, along with their base addresses, size, and path on the file system. This information can be useful in identifying any malicious DLLs that may have been injected into the process's memory space, or to determine the modules that are causing the process to behave unexpectedly.
+An injected DLL (Dynamic Link Library) is a malicious code that is injected into a legitimate process in order to modify its behavior or gain unauthorized access to the system. This technique is often used by malware to evade detection and to perform various malicious activities, such as stealing data, downloading additional malware, or providing remote access to the attacker. We can use `ldrmodules` plugin and specify the PID of that process `880` to get that. ldrmodules plugin lists all the DLLs that have been loaded into the memory space of the specified process, along with their base addresses, size, and path on the file system. This information can be useful in identifying any malicious DLLs that may have been injected into the process's memory space or to determine the modules that are causing the process to behave unexpectedly.
 
 ```
 Pid      Process              Base       InLoad InInit InMem MappedPath
@@ -315,13 +316,13 @@ Pid      Process              Base       InLoad InInit InMem MappedPath
      880 svchost.exe          0x77fe0000 True   True   True  \WINDOWS\system32\secur32.dll
 ```
 
-we can notice here that there is `\WINDOWS\system32\msxml3r.dll` that seems to be unlinked in all three ldr module list.This is the sign of dll hiding where the dll is unlinked from the doubly linked lists in PEB. which is suspicious .
+we can notice here that there is `\WINDOWS\system32\msxml3r.dll` that seems to be unlinked in all three ldr module lists. This is the sign of dll hiding where the dll is unlinked from the doubly linked lists in PEB. which is suspicious.
 
 Flag : <span style="color: #909090">msxml3r.dll</span>
 
 # #8 What is the base address of the injected dll?
 
-i used `dlllist` plugin but i didn't find it so it could mean that the DLL has been hidden or removed from the memory space of the process. We can get back to `malfind` to get it and also specify the process PID `880`.
+I used `dlllist` plugin but I didn't find it so it could mean that the DLL has been hidden or removed from the memory space of the process. We can get back to `malfind` to get it and also specify the process PID `880`.
 
 ```
 Process: svchost.exe Pid: 880 Address: `0x980000`
@@ -370,3 +371,7 @@ Flags: CommitCharge: 9, MemCommit: 1, PrivateMemory: 1, Protection: 6
 We can get the Base Address `0x980000`.
 
 Flag : <span style="color: #909090">0x980000</span>
+
+And finally, it’s the end, and I hope you enjoyed this :).
+
+[![giphy](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/giphy.gif)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/giphy.PNG)
