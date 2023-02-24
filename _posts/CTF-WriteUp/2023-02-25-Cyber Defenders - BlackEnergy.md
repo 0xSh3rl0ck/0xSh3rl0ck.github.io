@@ -1,10 +1,11 @@
 ---
-title: "Cyber Defenders: Pwned DC"
+title: "Cyber Defenders: BlackEnergy"
 classes: wide
 header:
-  teaser: /assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/1.PNG
-ribbon: gray
-description: "An ActiveDirectory compromise case: adversaries were able to take over corporate domain controller. Investigate the case and reveal the Who, When, What, Where, Why, and How."
+  teaser: /assets/images/CTF-WriteUp/BlackEnergy/Capture.PNG
+ribbon: gold
+description: "Scenario:
+A multinational corporation has been hit by a cyber attack that has led to the theft of sensitive data. The attack was carried out using a variant of the BlackEnergy v2 malware that has never been seen before. The company's security team has acquired a memory dump of the infected machine, and they want you to analyze the dump to understand the attack scope and impact."
 categories:
   - CTF-WriteUp
 toc: true
