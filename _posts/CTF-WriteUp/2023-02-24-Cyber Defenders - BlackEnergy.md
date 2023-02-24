@@ -46,8 +46,7 @@ Flag : <span style="color: #909090">WinXPSP2x86</span>
 
 # #2 How many processes were running when the image was acquired?
 
-We can list processes and then see what an active process is at this time as we can also get that time from `imageinfo` result in `Image date and time : 2023-02-13 18:29:11 UTC+0000`.
-so after getting the result from pslist.
+We can list processes and then see what an active process. so after getting the result from pslist.
 ```
 Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Start                          Exit                          
 ---------- -------------------- ------ ------ ------ -------- ------ ------ ------------------------------ ------------------------------
@@ -158,7 +157,7 @@ Flag : <span style="color: #909090">rootkit.exe</span>
 
 # #5 Which process shows the highest likelihood of code injection?
 
-We can use `malfind` plugin to check for that. malfind plugin searches the memory dump for suspicious code injection artifacts, including injected DLLs, process hollowing, and other memory code injection techniques.
+We can use `malfind` plugin to check for that. malfind plugin searches the memory dump for suspicious code injection artifacts, including injected DLLs, and other memory code injection techniques.
 
 ```
 Process: `svchost.exe` Pid: 880 Address: `0x980000`
@@ -242,7 +241,7 @@ Offset(V)     Pid     Handle     Access Type             Details
 0x89999980    880      0x4a8   0x1200a0 File             \Device\NetBT_Tcpip_{B35F0A5F-EBC3-4B5D-800D-7C1B64B30F14}
 ```
 
-we found this `\Device\HarddiskVolume1\WINDOWS\system32\drivers\str.sys` that is strange. we can also find it in the strings output of the dumped process.
+we found this `\Device\HarddiskVolume1\WINDOWS\system32\drivers\str.sys` that is strange. we can also find it in the strings output of the dumped process. this must be a reflective dll injection that is in memory injection.
 
 [![2](/assets/images/CTF-WriteUp/BlackEnergy/2.PNG)](/assets/images/CTF-WriteUp/BlackEnergy/2.PNG)
 
@@ -250,7 +249,7 @@ Flag : <span style="color: #909090">C:\WINDOWS\system32\drivers\str.sys</span>
 
 # #7 What is the name of the injected dll file loaded from the recent process?
 
-An injected DLL (Dynamic Link Library) is a malicious code that is injected into a legitimate process in order to modify its behavior or gain unauthorized access to the system. This technique is often used by malware to evade detection and to perform various malicious activities, such as stealing data, downloading additional malware, or providing remote access to the attacker. We can use `ldrmodules` plugin and specify the PID of that process `880` to get that. ldrmodules plugin lists all the DLLs that have been loaded into the memory space of the specified process, along with their base addresses, size, and path on the file system. This information can be useful in identifying any malicious DLLs that may have been injected into the process's memory space or to determine the modules that are causing the process to behave unexpectedly.
+DLL injection is a technique used for running code within the address space of another process by forcing it to load a dynamic-link library. DLL injection is often used by external programs to influence the behavior of another program in a way its authors did not anticipate or intend. We can use `ldrmodules` plugin and specify the PID of that process `880` to get that. ldrmodules plugin lists all the DLLs that have been loaded into the memory space of the specified process, along with their base addresses, size, and path on the file system. This information can be useful in identifying any malicious DLLs that may have been injected into the process's memory space or to determine the modules that are causing the process to behave unexpectedly.
 
 ```
 Pid      Process              Base       InLoad InInit InMem MappedPath
@@ -374,4 +373,7 @@ Flag : <span style="color: #909090">0x980000</span>
 
 And finally, it’s the end, and I hope you enjoyed this :).
 
-[![giphy](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/giphy.gif)](/assets/images/CTF-WriteUp/Cyber-Defenders-Pwned_DC/giphy.PNG)
+[![giphy](/assets/images/CTF-WriteUp/BlackEnergy/giphy.gif)](/assets/images/CTF-WriteUp/BlackEnergy/giphy.gif)
+
+# Refrences 
+[Reflective DLL Injection](https://www.ired.team/offensive-security/code-injection-process-injection/reflective-dll-injection)
