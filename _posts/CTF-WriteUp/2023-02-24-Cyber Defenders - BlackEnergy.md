@@ -241,7 +241,7 @@ Offset(V)     Pid     Handle     Access Type             Details
 0x89999980    880      0x4a8   0x1200a0 File             \Device\NetBT_Tcpip_{B35F0A5F-EBC3-4B5D-800D-7C1B64B30F14}
 ```
 
-we found this `\Device\HarddiskVolume1\WINDOWS\system32\drivers\str.sys` that is strange. we can also find it in the strings output of the dumped process. this must be a reflective dll injection that is in memory injection.
+we found this `\Device\HarddiskVolume1\WINDOWS\system32\drivers\str.sys` that is strange. we can also find it in the strings output of the dumped process.
 
 [![2](/assets/images/CTF-WriteUp/BlackEnergy/2.PNG)](/assets/images/CTF-WriteUp/BlackEnergy/2.PNG)
 
@@ -249,7 +249,7 @@ Flag : <span style="color: #909090">C:\WINDOWS\system32\drivers\str.sys</span>
 
 # #7 What is the name of the injected dll file loaded from the recent process?
 
-DLL injection is a technique used for running code within the address space of another process by forcing it to load a dynamic-link library. DLL injection is often used by external programs to influence the behavior of another program in a way its authors did not anticipate or intend. We can use `ldrmodules` plugin and specify the PID of that process `880` to get that. ldrmodules plugin lists all the DLLs that have been loaded into the memory space of the specified process, along with their base addresses, size, and path on the file system. This information can be useful in identifying any malicious DLLs that may have been injected into the process's memory space or to determine the modules that are causing the process to behave unexpectedly.
+Reflective DLL Injection: Reflective DLL injection is a technique that allows an attacker to inject a DLL's into a victim process from memory rather than disk. We can use `ldrmodules` plugin and specify the PID of that process `880` to get that. ldrmodules plugin lists all the DLLs that have been loaded into the memory space of the specified process, along with their base addresses, size, and path on the file system. This information can be useful in identifying any malicious DLLs that may have been injected into the process's memory space or to determine the modules that are causing the process to behave unexpectedly.
 
 ```
 Pid      Process              Base       InLoad InInit InMem MappedPath
